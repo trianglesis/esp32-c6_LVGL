@@ -3,6 +3,8 @@
 Board: `ESP32-C6-LCD-1.47`
 waveshare [URL](https://www.waveshare.com/wiki/ESP32-C6-LCD-1.47)
 
+Connect VS Code COM port as following: `ESP32-C6 chip via ... USB-JTAG`
+
 # Display
 
 Model: `ST7789` 
@@ -49,6 +51,7 @@ LVGL Start [DOC](https://github.com/lvgl/lvgl/blob/4a506542dd3fbcd8d0f39cd12bde5
 Install:
 
 - `idf.py add-dependency "lvgl/lvgl^9.2.2"`
+- `idf.py add-dependency "espressif/led_strip^3.0.1"`
 
 OR better local
 
@@ -102,8 +105,12 @@ Using VS code:
 
 Project example
 - https://github.com/Omegaki113r/lvgl_demo/tree/main
+- https://github.com/VolosR/waveshareBoards/tree/main/C6example
 
 ## DOCs
+
+Waveshare:
+- https://www.waveshare.com/wiki/ESP32-C6-LCD-1.47
 
 LVGL Espressif
 - https://docs.lvgl.io/master/details/integration/chip/espressif.html
