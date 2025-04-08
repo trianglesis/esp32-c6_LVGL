@@ -48,6 +48,18 @@ LVGL Start [DOC](https://github.com/lvgl/lvgl/blob/4a506542dd3fbcd8d0f39cd12bde5
 
 # Making things work:
 
+## Example way
+
+Requre older LVGL 8, not suitable now
+
+Use example dir hierarchy and files from:
+- https://www.waveshare.com/wiki/ESP32-C6-LCD-1.47
+- File `ESP32-S3-LCD-1.47-Demo`
+
+Just use as project example
+
+## Complex way
+
 Install:
 
 - `idf.py add-dependency "lvgl/lvgl^9.2.2"`
