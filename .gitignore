@@ -4,4 +4,4 @@ build/
 sdkconfig
 sdkconfig.old
 components/
-components/lvgl/
+managed_components/
