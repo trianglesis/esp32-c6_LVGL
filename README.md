@@ -56,43 +56,59 @@ Use example dir hierarchy and files from:
 - https://www.waveshare.com/wiki/ESP32-C6-LCD-1.47
 - File `ESP32-S3-LCD-1.47-Demo`
 
-Just use as project example
+Just use as project example.
+Cannot be used with latest version 9+
+
+[Log](doc/log/lvgl_9_is_not_usable_with_example.log)
 
 ## Complex way
 
+Continue to study:
+
 Install:
 
+Usual 1st cmd OR better local (to be able to configure lvgl for once)
+
 - `idf.py add-dependency "lvgl/lvgl^9.2.2"`
-- `idf.py add-dependency "espressif/led_strip^3.0.1"`
-
-OR better local
-
 - `git submodule add https://github.com/lvgl/lvgl.git components/lvgl`
 
-Or into the ignored folder: 
+Into the ignored folder (not to add the full other repo in my repo): 
 
 - `git submodule add -f https://github.com/lvgl/lvgl.git components/lvgl`
 
-Other module help driver for display, probably:
+### Optional
+
+Optional, not need LED for LCD to work
+
+- `idf.py add-dependency "espressif/led_strip^3.0.1"`
+
+Other module help driver for display, probably (not actually, try to use lvgl pure, as it already has a driver for our display and board):
+
 - `idf.py add-dependency "espressif/esp_lvgl_port^2.5.0"`
 
 # Setup
 
+According to the [doc](https://docs.lvgl.io/master/details/integration/adding-lvgl-to-your-project/configuration.html#lv-conf-h)
+
 1. Copy `lv_conf_template.h` 
-   1. to `components/lv_conf.h`, change to 1: `#if 0`
+   1. to `components/lv_conf.h`
       1. Should be a path: 
          1. `{PROJECT_ROOT}/components/lvgl/..`
          2. `{PROJECT_ROOT}/components/lv_conf.h`
-      2. According to [doc](https://github.com/lvgl/lvgl/blob/4a506542dd3fbcd8d0f39cd12bde542589b57081/docs/get-started/quick-overview.md)
-      3. I've based my exaple at this dir [repo](https://github.com/Omegaki113r/lvgl_demo/tree/main/components/lvgl)
+   2. Open and change the following to 1: `#if 0` (/* Set this to "1" to enable content */)
+   3. Define `LV_COLOR_DEPTH 16` for LCD: `Display: ST7789`
+   4. Define `LV_USE_ST7789 1` for LCD: `Display: ST7789`
+   5. Optional: disable examples: `LV_BUILD_EXAMPLES 0`
+   6. Optional: disable demo: `LV_USE_DEMO_WIDGETS 0 `
 
-2. Next config LVGL:
+2. Optional: config LVGL at `menuconfig`
    1. `idf.py menuconfig` -> `LVGL configuration` (most bottom) - >
         ```text
         Color depth: 24
         ```
 3. Try build the project first time.
-   1. no flashing!
+   1. Do not flash, just builds.
+   2. Everything should be fine.
 
 4. Adding drivers for display
    1. As per `LVGL Espressif` doc, drivers can be found at `lvgl_esp32_drivers` package.

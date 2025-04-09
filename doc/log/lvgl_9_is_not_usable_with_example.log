@@ -1,0 +1,77 @@
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:11:1: error: unknown type name 'lv_disp_draw_buf_t'; did you mean 'lv_draw_buf_t'?
+   11 | lv_disp_draw_buf_t disp_buf;                                                 // contains internal graphic buffer(s) called draw buffer(s)
+      | ^~~~~~~~~~~~~~~~~~
+      | lv_draw_buf_t
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:11:20: error: conflicting types for 'disp_buf'; have 'int'
+   11 | lv_disp_draw_buf_t disp_buf;                                                 // contains internal graphic buffer(s) called draw buffer(s)
+      |                    ^~~~~~~~
+In file included from D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:1:
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.h:16:22: note: previous declaration of 'disp_buf' with type 'lv_draw_buf_t'
+   16 | extern lv_draw_buf_t disp_buf;                                                 // contains internal graphic buffer(s) called draw buffer(s)
+      |                      ^~~~~~~~
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c: In function 'example_notify_lvgl_flush_ready':
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:23:25: error: passing argument 1 of 'lv_display_flush_ready' from incompatible pointer type [-Wincompatible-pointer-types]
+   23 |     lv_disp_flush_ready(disp_driver);
+      |                         ^~~~~~~~~~~
+      |                         |
+      |                         lv_fs_drv_t *
+In file included from D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/managed_components/lvgl__lvgl/src/core/lv_obj_tree.h:18,
+                 from D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/managed_components/lvgl__lvgl/src/core/lv_obj.h:24,
+                 from D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/managed_components/lvgl__lvgl/lvgl.h:39,
+                 from D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.h:8:
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/managed_components/lvgl__lvgl/src/display/lv_display.h:316:69: note: expected 'lv_display_t *' but argument is of type 'lv_fs_drv_t *'
+  316 | LV_ATTRIBUTE_FLUSH_READY void lv_display_flush_ready(lv_display_t * disp);
+      |                                                      ~~~~~~~~~~~~~~~^~~~
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c: In function 'example_lvgl_port_update_callback':
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:43:16: error: 'lv_fs_drv_t' has no member named 'rotated'
+   43 |     switch (drv->rotated) {
+      |                ^~
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:44:10: error: 'LV_DISP_ROT_NONE' undeclared (first use in this function); did you mean 'LV_DIR_NONE'?
+   44 |     case LV_DISP_ROT_NONE:
+      |          ^~~~~~~~~~~~~~~~
+      |          LV_DIR_NONE
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:44:10: note: each undeclared identifier is reported only once for each function it appears in
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:49:10: error: 'LV_DISP_ROT_90' undeclared (first use in this function); did you mean 'LV_DISP_ROTATION_90'?
+   49 |     case LV_DISP_ROT_90:
+      |          ^~~~~~~~~~~~~~
+      |          LV_DISP_ROTATION_90
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:54:10: error: 'LV_DISP_ROT_180' undeclared (first use in this function); did you mean 'LV_DISP_ROTATION_180'?
+   54 |     case LV_DISP_ROT_180:
+      |          ^~~~~~~~~~~~~~~
+      |          LV_DISP_ROTATION_180
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:59:10: error: 'LV_DISP_ROT_270' undeclared (first use in this function); did you mean 'LV_DISP_ROTATION_270'?
+   59 |     case LV_DISP_ROT_270:
+      |          ^~~~~~~~~~~~~~~
+      |          LV_DISP_ROTATION_270
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c: In function 'LVGL_Init':
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:74:5: error: implicit declaration of function 'lv_disp_draw_buf_init'; did you mean 'lv_draw_buf_init'? [-Wimplicit-function-declaration]
+   74 |     lv_disp_draw_buf_init(&disp_buf, buf1, buf2, LVGL_BUF_LEN );                              // initialize LVGL draw buffers
+      |     ^~~~~~~~~~~~~~~~~~~~~
+      |     lv_draw_buf_init
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:77:5: error: implicit declaration of function 'lv_disp_drv_init'; did you mean 'lv_fs_drv_init'? [-Wimplicit-function-declaration]
+   77 |     lv_disp_drv_init(&disp_drv);                                                                        // Create a new screen object and initialize the associated device
+      |     ^~~~~~~~~~~~~~~~
+      |     lv_fs_drv_init
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:78:13: error: 'lv_fs_drv_t' has no member named 'hor_res'
+   78 |     disp_drv.hor_res = EXAMPLE_LCD_H_RES;
+      |             ^
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:79:13: error: 'lv_fs_drv_t' has no member named 'ver_res'
+   79 |     disp_drv.ver_res = EXAMPLE_LCD_V_RES;                                                     // Horizontal pixel count
+      |             ^
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:81:13: error: 'lv_fs_drv_t' has no member named 'flush_cb'
+   81 |     disp_drv.flush_cb = example_lvgl_flush_cb;                                                          // Function : copy a buffer's content to a specific area of the display
+      |             ^
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:82:13: error: 'lv_fs_drv_t' has no member named 'drv_update_cb'
+   82 |     disp_drv.drv_update_cb = example_lvgl_port_update_callback;                                         // Function : Rotate display and touch, when rotated screen in LVGL. Called when driver parameters are updated.
+      |             ^
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:83:13: error: 'lv_fs_drv_t' has no member named 'draw_buf'
+   83 |     disp_drv.draw_buf = &disp_buf;                                                                      // LVGL will use this buffer(s) to draw the screens contents
+      |             ^
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:86:12: error: implicit declaration of function 'lv_disp_drv_register'; did you mean 'lv_fs_drv_register'? [-Wimplicit-function-declaration]
+   86 |     disp = lv_disp_drv_register(&disp_drv);                                                  // Create screen objects
+      |            ^~~~~~~~~~~~~~~~~~~~
+      |            lv_fs_drv_register
+D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/LVGL_Driver/LVGL_Driver.c:86:10: error: assignment to 'lv_disp_t *' {aka 'lv_display_t *'} from 'int' makes pointer from integer without a cast [-Wint-conversion]
+   86 |     disp = lv_disp_drv_register(&disp_drv);                                                  // Create screen objects
+      |          ^
+[1596/1604] Performing build step for 'bootloader'
