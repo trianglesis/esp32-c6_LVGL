@@ -78,11 +78,11 @@ Install:
 Usual 1st cmd OR better local (to be able to configure lvgl for once)
 
 - `idf.py add-dependency "lvgl/lvgl^9.2.2"`
-- `git submodule add https://github.com/lvgl/lvgl.git components/lvgl`
+- `git submodule add https://github.com/lvgl/lvgl.git@v9.2.2 components/lvgl`
 
 Into the ignored folder (not to add the full other repo in my repo): 
 
-- `git submodule add -f https://github.com/lvgl/lvgl.git components/lvgl`
+- `git submodule add -f https://github.com/lvgl/lvgl.git@v9.2.2 components/lvgl`
 
 ### Optional
 

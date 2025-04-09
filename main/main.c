@@ -41,6 +41,9 @@ https://github.com/lvgl/lvgl/blob/release/v9.2/docs/porting/display.rst#id2
 #include "esp_log.h"
 #include "lvgl.h"
 
+// pictures
+#include "screen/ui.h"
+
 static const char *TAG = "playground";
 
 
@@ -206,6 +209,9 @@ static esp_err_t lvgl_init(void)
     lv_display_set_rotation(display, LV_DISPLAY_ROTATION_270);
     esp_lcd_panel_mirror(panel_handle, false, true);
     esp_lcd_panel_swap_xy(panel_handle, true);
+
+    // Set this display as defaulkt for UI use
+    lv_display_set_default(display);
     return ESP_OK;
 }
 
@@ -310,13 +316,17 @@ static void lvgl_task(void *arg) {
     }
 
     // Create a simple label
-    lv_obj_t *label = lv_label_create(lv_scr_act());
-    lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
-    lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+    // lv_obj_t *label = lv_label_create(lv_scr_act());
+    // lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
+    // lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 
     long curtime = esp_timer_get_time()/1000;
     int counter = 0;
 
+    lv_arc_set_value(ui_screenArc_co2, 427);
+    lv_label_set_text(ui_screenLabel_co2ppm, "START");
+
+    ui_init();
     // Handle LVGL tasks
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(10));
@@ -326,9 +336,11 @@ static void lvgl_task(void *arg) {
             curtime = esp_timer_get_time()/1000;
 
             char textlabel[20];
-            sprintf(textlabel, "Running: %u\n", counter);
+            sprintf(textlabel, "%u", counter);
             printf(textlabel);
-            lv_label_set_text(label, textlabel);
+            // lv_label_set_text(label, textlabel);
+            lv_arc_set_value(ui_screenArc_co2, counter);
+            lv_label_set_text(ui_screenLabel_co2ppm, textlabel);
             counter++;
         }
     }
