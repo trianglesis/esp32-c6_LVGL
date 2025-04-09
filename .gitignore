@@ -7,3 +7,5 @@ components/
 managed_components/
 __EX__components/
 !components/lv_conf.h
+SquareLineProj/autosave/
+SquareLineProj/backup/
