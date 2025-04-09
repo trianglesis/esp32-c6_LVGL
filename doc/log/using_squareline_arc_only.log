@@ -1,0 +1,150 @@
+SPIWP:0xee
+mode:DIO, clock div:2
+load:0x40875720,len:0x16b8
+load:0x4086c110,len:0xe84
+load:0x4086e610,len:0x3058
+entry 0x4086c11a
+I (23) boot: ESP-IDF v5.4.1 2nd stage bootloader
+I (23) boot: compile time Apr  9 2025 18:04:47
+I (24) boot: chip revision: v0.1
+I (24) boot: efuse block revision: v0.3
+I (26) boot.esp32c6: SPI Speed      : 80MHz
+I (30) boot.esp32c6: SPI Mode       : DIO
+I (34) boot.esp32c6: SPI Flash Size : 2MB
+I (38) boot: Enabling RNG early entropy source...
+I (42) boot: Partition Table:
+I (45) boot: ## Label            Usage          Type ST Offset   Length
+I (51) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (58) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (64) boot:  2 factory          factory app      00 00 00010000 00100000
+I (71) boot: End of partition table
+I (74) esp_image: segment 0: paddr=00010020 vaddr=42050020 size=1084ch ( 67660) map
+I (94) esp_image: segment 1: paddr=00020874 vaddr=40800000 size=077a4h ( 30628) load
+I (101) esp_image: segment 2: paddr=00028020 vaddr=42000020 size=4f7ech (325612) map
+I (162) esp_image: segment 3: paddr=00077814 vaddr=408077a4 size=062dch ( 25308) load
+I (169) esp_image: segment 4: paddr=0007daf8 vaddr=4080da80 size=018dch (  6364) load
+I (171) esp_image: segment 5: paddr=0007f3dc vaddr=50000000 size=0001ch (    28) load
+I (177) boot: Loaded app from partition at offset 0x10000
+I (179) boot: Disabling RNG early entropy source...
+I (195) cpu_start: Unicore app
+I (204) cpu_start: Pro cpu start user code
+I (204) cpu_start: cpu freq: 160000000 Hz
+I (204) app_init: Application information:
+I (205) app_init: Project name:     esp32-c6_LVGL
+I (209) app_init: App version:      084e230-dirty
+I (213) app_init: Compile time:     Apr  9 2025 18:08:56
+I (218) app_init: ELF file SHA256:  fbceb45ed...
+I (222) app_init: ESP-IDF:          v5.4.1
+I (226) efuse_init: Min chip rev:     v0.0
+I (230) efuse_init: Max chip rev:     v0.99
+I (234) efuse_init: Chip rev:         v0.1
+I (238) heap_init: Initializing. RAM available for dynamic allocation:
+I (244) heap_init: At 40820520 len 0005C0F0 (368 KiB): RAM
+I (249) heap_init: At 4087C610 len 00002F54 (11 KiB): RAM
+I (254) heap_init: At 5000001C len 00003FCC (15 KiB): RTCRAM
+I (261) spi_flash: detected chip: generic
+I (263) spi_flash: flash io: dio
+W (266) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
+I (279) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (285) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (291) coexist: coex firmware version: e727207
+I (296) coexist: coexist rom version 5b8dcfa
+I (300) main_task: Started on CPU0
+I (300) main_task: Calling app_main()
+I (2300) playground: Turn on LCD backlight first, to see display content early!
+I (2300) playground: Turn off LCD backlight
+I (2300) gpio: GPIO[22]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
+I (2300) playground: Set LCD backlight
+I (2310) gpio: GPIO[15]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
+I (2320) playground: Install ST7789T panel driver
+I (2320) gpio: GPIO[21]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 
+Guru Meditation Error: Core  0 panic'ed (Load access fault). Exception was unhandled.
+
+Core  0 register dump:
+MEPC    : 0x42027d5a  RA      : 0x4200c554  SP      : 0x40825e10  GP      : 0x4080e284
+--- 0x42027d5a: lv_arc_set_value at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/components/lvgl/src/widgets/arc/lv_arc.c:244
+--- 0x4200c554: lvgl_task at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/main.c:335
+
+TP      : 0x40825e90  T0      : 0x400208f0  T1      : 0x00000000  T2      : 0x00000000
+--- 0x400208f0: systimer_hal_set_alarm_target in ROM
+
+S0/FP   : 0x000008f5  S1      : 0x00000000  A0      : 0x00000000  A1      : 0x000001ab
+A2      : 0x0000fa00  A3      : 0x00000004  A4      : 0x00000001  A5      : 0x40820000
+A6      : 0xfa000000  A7      : 0xf8800000  S2      : 0x40811e20  S3      : 0x00000000
+S4      : 0x00000000  S5      : 0x00000000  S6      : 0x00000000  S7      : 0x00000000
+S8      : 0x00000000  S9      : 0x00000000  S10     : 0x00000000  S11     : 0x00000000
+T3      : 0x00000000  T4      : 0x000008c0  T5      : 0x00000000  T6      : 0x00000000
+MSTATUS : 0x00001881  MTVEC   : 0x40800001  MCAUSE  : 0x00000005  MTVAL   : 0x00000040
+--- 0x40800001: _vector_table at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/riscv/vectors_intc.S:54
+
+MHARTID : 0x00000000
+
+Stack memory:
+40825e10: 0x40811e20 0x00000000 0x000008f5 0x4200c554 0x00000000 0x00000000 0x00000000 0x00000000
+--- 0x4200c554: lvgl_task at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/main.c:335
+
+40825e30: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40825e50: 0x00000000 0x00000000 0x00000000 0x40808046 0x00000000 0x00000000 0x00000000 0x00000000
+--- 0x40808046: vPortTaskWrapper at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/riscv/port.c:258
+
+40825e70: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40825e90: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x00000150 0x40825d80 0x000002d5 0x4080f5c8 0x4080f5c8
+40825eb0: 0x40825ea0 0x4080f5c0 0x00000015 0x00000000 0x00000000 0x40825ea0 0x00000000 0x00000004
+40825ed0: 0x40823e9c 0x4c47564c 0x73617420 0x0000006b 0x00000000 0x40825e90 0x00000004 0x00000000
+40825ef0: 0x00000000 0x00000000 0x00000000 0x40820e70 0x40820ed8 0x40820f40 0x00000000 0x00000000
+40825f10: 0x00000001 0x00000000 0x00000000 0x00000000 0x42007858 0x00000000 0x00000000 0x00000000
+--- 0x42007858: esp_cleanup_r at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/newlib/newlib_init.c:43
+
+40825f30: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40825f50: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40825f70: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40825f90: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40825fb0: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40825fd0: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40825ff0: 0x00000010 0x00000000 0x64636c05 0x6e61705f 0x40006c65 0x00000018 0x40825ff4 0x64636c05
+--- 0x40006c65: set_rx_gain_cal_iq in ROM
+
+40826010: 0x6e61705f 0x732e6c65 0x38373774 0x40820039 0x00000010 0x40826008 0x616c7005 0x6f726779
+40826030: 0x00646e75 0x00000054 0x00000000 0x40826038 0x00000000 0x00000000 0x00000000 0x40826050
+40826050: 0xffffffff 0x40826050 0x40826050 0x00000000 0x40826064 0xffffffff 0x40826064 0x40826064
+40826070: 0x00000001 0x00000001 0x00000000 0xe500ffff 0x00000000 0xe7d483aa 0x40826030 0x00000024
+40826090: 0x60007000 0x00000000 0x00000004 0x00000000 0x00000001 0x00000000 0x00000000 0x00000000
+408260b0: 0x00000000 0x0000000c 0x408260c8 0x00000000 0x408260b0 0x0000000c 0x0b56010a 0x00000000
+408260d0: 0x408265f4 0x00000068 0x00000001 0x00000000 0x42049c10 0x40826528 0x00000006 0xffffffff
+--- 0x42049c10: spi_master_deinit_driver at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_master.c:341
+
+408260f0: 0x00000007 0xffffffff 0xffffffff 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40826110: 0x00002b00 0x00000000 0x00000000 0x00000000 0x0000006c 0x00002ff4 0x00000001 0x00000004
+40826130: 0x408262c0 0x40826144 0x00000000 0x00000000 0x00000014 0x4082615c 0x40826234 0x00000003
+40826150: 0x40826270 0x40826298 0x00000034 0x40826214 0x00000000 0xb33fffff 0x00000000 0x00000000
+40826170: 0x00000000 0x00000001 0x80000000 0x4204e82a 0x00000000 0x00000000 0x00000000 0x00000000
+--- 0x4204e82a: gdma_del_tx_channel at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/dma/gdma.c:728
+
+40826190: 0x0000007c 0x00000000 0x00000000 0x60080000 0x4080daec 0x4080a354 0x4080a3de 0x4080a23c
+--- 0x4080a354: gdma_ahb_hal_start_with_desc at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:18
+--- 0x4080a3de: gdma_ahb_hal_stop at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:29
+--- 0x4080a23c: gdma_ahb_hal_append at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:38
+
+408261b0: 0x4080a306 0x4204f332 0x4204f370 0x4204f40a 0x4204f44e 0x00000000 0x4204f4c6 0x4204f594
+--- 0x4080a306: gdma_ahb_hal_reset at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:47
+--- 0x4204f332: gdma_ahb_hal_set_priority at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:56
+--- 0x4204f370: gdma_ahb_hal_connect_peri at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:65
+--- 0x4204f40a: gdma_ahb_hal_disconnect_peri at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:76
+--- 0x4204f44e: gdma_ahb_hal_enable_burst at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:85
+--- 0x4204f4c6: gdma_ahb_hal_set_strategy at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:107
+--- 0x4204f594: gdma_ahb_hal_get_intr_status_reg at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:147
+
+408261d0: 0x4204f54a 0x4080a27a 0x4080a2d4 0x4080a296 0x00000000 0x4204f5b0 0xb33fffff 0x00000000
+--- 0x4204f54a: gdma_ahb_hal_enable_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:120
+--- 0x4080a27a: gdma_ahb_hal_clear_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:129
+--- 0x4080a2d4: gdma_ahb_hal_read_intr_status at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:138
+--- 0x4080a296: gdma_ahb_hal_get_eof_desc_addr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:156
+--- 0x4204f5b0: gdma_ahb_hal_enable_etm_task at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:170
+
+408261f0: 0x00000001 0x00000001 0x40826214 0x00000000 0x00000000 0x00000002 0x00000000 0x00000000
+
+
+
+ELF file SHA256: fbceb45ed
+
+Rebooting...

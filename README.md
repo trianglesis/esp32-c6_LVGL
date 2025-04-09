@@ -5,6 +5,24 @@ waveshare [URL](https://www.waveshare.com/wiki/ESP32-C6-LCD-1.47)
 
 Connect VS Code COM port as following: `ESP32-C6 chip via ... USB-JTAG`
 
+Initial setup:
+
+```text
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="4MB"
+```
+
+Use partitions from example:
+
+```text
+# Name,     Type, SubType, Offset,   Size, Flags
+# Note: if you have increased the bootloader size, make sure to update the offsets to avoid overlap,,,,
+nvs,        data, nvs,      0x9000,  0x6000,
+factory,0,0,        0x10000, 2M,
+flash_test, data, fat,      ,        528K,
+
+```
+
 # Display
 
 Model: `ST7789` 
@@ -78,11 +96,16 @@ Install:
 Usual 1st cmd OR better local (to be able to configure lvgl for once)
 
 - `idf.py add-dependency "lvgl/lvgl^9.2.2"`
-- `git submodule add https://github.com/lvgl/lvgl.git@v9.2.2 components/lvgl`
+- `git submodule add https://github.com/lvgl/lvgl.git components/lvgl`
 
 Into the ignored folder (not to add the full other repo in my repo): 
 
-- `git submodule add -f https://github.com/lvgl/lvgl.git@v9.2.2 components/lvgl`
+- `git submodule add -f https://github.com/lvgl/lvgl.git components/lvgl`
+
+IMPORTANT: Switch branch to a released last: `9.2.2`
+
+- `cd .\components\lvgl\`
+- `git checkout v9.2.2`
 
 ### Optional
 

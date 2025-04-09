@@ -42,7 +42,7 @@ https://github.com/lvgl/lvgl/blob/release/v9.2/docs/porting/display.rst#id2
 #include "lvgl.h"
 
 // pictures
-#include "screen/ui.h"
+#include "ui/ui.h"
 
 static const char *TAG = "playground";
 
@@ -72,8 +72,8 @@ static const char *TAG = "playground";
 #define LCD_PARAM_BITS         8
 
 // Rotate 90deg and compensate buffer change
-#define Offset_X 34
-#define Offset_Y 0
+#define Offset_X 34 // 0 IF ROTATED 270deg
+#define Offset_Y 0  // 34 IF ROTATED 270deg
 
 #define LEDC_HS_TIMER          LEDC_TIMER_0
 #define LEDC_LS_MODE           LEDC_LOW_SPEED_MODE
@@ -83,7 +83,7 @@ static const char *TAG = "playground";
 #define LEDC_ResolutionRatio   LEDC_TIMER_13_BIT
 #define LEDC_MAX_Duty          ((1 << LEDC_ResolutionRatio) - 1)
 
-#define BUFFER_SIZE         (DISP_HOR_RES * DISP_VER_RES * sizeof(uint16_t) / 10)
+#define BUFFER_SIZE            (DISP_VER_RES * DISP_HOR_RES * sizeof(uint16_t) / 10)
 
 static esp_lcd_panel_handle_t panel_handle = NULL;
 static esp_lcd_panel_io_handle_t io_handle = NULL;
@@ -146,12 +146,16 @@ static bool notify_flush_ready(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel
 }
 
 // Added offset for ROTATED diaplay!
-static void flush_cb(lv_display_t* disp, const lv_area_t* area, uint8_t* px_map)
-{
-    int x1 = area->x1;
-    int x2 = area->x2;
-    int y1 = area->y1 + Offset_X; // Offset image to compensate for smaller 172px resolution
-    int y2 = area->y2 + Offset_X; // Offset image to compensate for smaller 172px resolution
+static void flush_cb(lv_display_t* disp, const lv_area_t* area, uint8_t* px_map) {
+    // Old
+    // int y1 = area->y1;
+    // int y2 = area->y2;
+    // Rotated
+    // https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/86
+    int x1 = area->x1 + Offset_X;
+    int x2 = area->x2 + Offset_X;
+    int y1 = area->y1 + Offset_Y;
+    int y2 = area->y2 + Offset_Y;
     
     // uncomment the following line if the colors are wrong
     lv_draw_sw_rgb565_swap(px_map, (x2 + 1 - x1) * (y2 + 1 - y1)); // I have tried with and without this
@@ -182,8 +186,9 @@ static esp_err_t lvgl_init(void)
     ESP_RETURN_ON_ERROR(esp_lcd_panel_io_register_event_callbacks(io_handle, &cbs, display), TAG, "esp_lcd_panel_io_register_event_callbacks error"); // I have tried to use 
     ESP_RETURN_ON_ERROR(esp_lcd_panel_init(panel_handle), TAG, "esp_lcd_panel_init error");
 
-    lv_display_set_resolution(display, DISP_HOR_RES, DISP_VER_RES);
-    lv_display_set_physical_resolution(display, DISP_HOR_RES, DISP_VER_RES);
+    // lv_display_set_resolution(display, DISP_HOR_RES, DISP_VER_RES);
+    // lv_display_set_physical_resolution(display, DISP_HOR_RES, DISP_VER_RES);
+
     /* Landscape orientation:
     270deg = USB on the left side - landscape orientation
     270deg = USB on the right side - landscape orientation
@@ -206,12 +211,13 @@ static esp_err_t lvgl_init(void)
     https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/60
     */
     
-    lv_display_set_rotation(display, LV_DISPLAY_ROTATION_270);
-    esp_lcd_panel_mirror(panel_handle, false, true);
-    esp_lcd_panel_swap_xy(panel_handle, true);
+    // lv_display_set_rotation(display, LV_DISPLAY_ROTATION_270);
+    // esp_lcd_panel_mirror(panel_handle, false, true);
+    // esp_lcd_panel_swap_xy(panel_handle, true);
 
     // Set this display as defaulkt for UI use
-    lv_display_set_default(display);
+    // lv_display_set_default(display);
+
     return ESP_OK;
 }
 
@@ -242,8 +248,8 @@ static esp_err_t display_init(void) {
         .lcd_param_bits = LCD_PARAM_BITS,
         .spi_mode = 0,
         .trans_queue_depth = 10,
-        .on_color_trans_done = notify_flush_ready,
-        .user_ctx = &display,
+        // .on_color_trans_done = notify_flush_ready,
+        // .user_ctx = &display,
     };
 
     // Attach the LCD to the SPI bus - repeat after example
@@ -316,31 +322,37 @@ static void lvgl_task(void *arg) {
     }
 
     // Create a simple label
-    // lv_obj_t *label = lv_label_create(lv_scr_act());
-    // lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
-    // lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+    lv_obj_t *label = lv_label_create(lv_scr_act());
+    lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
+    lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 
     long curtime = esp_timer_get_time()/1000;
     int counter = 0;
 
-    lv_arc_set_value(ui_screenArc_co2, 427);
-    lv_label_set_text(ui_screenLabel_co2ppm, "START");
+    // ESP_LOGD(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
+    // vTaskDelay(pdMS_TO_TICKS(5000));
+    // lv_arc_set_value(uic_Arc1, 427);
+    // // lv_label_set_text(ui_Label1, "START");
+    // ESP_LOGD(TAG, "Called SquareLine LVGL UI objects once at init. Sleep 5 sec.");
+    // vTaskDelay(pdMS_TO_TICKS(5000));
 
-    ui_init();
     // Handle LVGL tasks
     while (1) {
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(2500));
         lv_task_handler();
 
         if (esp_timer_get_time()/1000 - curtime > 1000) {
             curtime = esp_timer_get_time()/1000;
 
             char textlabel[20];
-            sprintf(textlabel, "%u", counter);
+            sprintf(textlabel, "This is counter: %u\n", counter);
             printf(textlabel);
-            // lv_label_set_text(label, textlabel);
-            lv_arc_set_value(ui_screenArc_co2, counter);
-            lv_label_set_text(ui_screenLabel_co2ppm, textlabel);
+            lv_label_set_text(label, textlabel);
+
+            // ESP_LOGD(TAG, "Now calling SquareLine LVGL UI objects in loop.");
+            lv_arc_set_value(uic_Arc1, counter);
+            lv_label_set_text(ui_Label1, textlabel);
+
             counter++;
         }
     }
