@@ -61,6 +61,14 @@ Cannot be used with latest version 9+
 
 [Log](doc/log/lvgl_9_is_not_usable_with_example.log)
 
+## Other people help way
+
+Read this [forum](https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515)
+
+It has a great example of everything without a hustle.
+
+For deep understanding it can be usefull to read the `complex way` later.
+
 ## Complex way
 
 Continue to study:
@@ -86,7 +94,9 @@ Other module help driver for display, probably (not actually, try to use lvgl pu
 
 - `idf.py add-dependency "espressif/esp_lvgl_port^2.5.0"`
 
-# Setup
+### Setup
+
+#### Configuration
 
 According to the [doc](https://docs.lvgl.io/master/details/integration/adding-lvgl-to-your-project/configuration.html#lv-conf-h)
 
@@ -110,12 +120,16 @@ According to the [doc](https://docs.lvgl.io/master/details/integration/adding-lv
    1. Do not flash, just builds.
    2. Everything should be fine.
 
-4. Adding drivers for display
-   1. As per `LVGL Espressif` doc, drivers can be found at `lvgl_esp32_drivers` package.
-      1. *NOTE*: `LVGL doc` points to `IDF` repo, showing this display is natively supported:
-         1. https://github.com/espressif/esp-idf/tree/master/components/esp_lcd/src at: `components/esp_lcd/src/esp_lcd_panel_st7789.c` it means we only need to install helper modules for LCD, or we can use it as it is, initializing everything from scratch.
-   2. Install helper module now: `idf.py add-dependency "espressif/esp_lvgl_port^2.5.0"`
-      1. Or should I?
+#### Connecting LVGL
+
+According to the [DOC](https://docs.lvgl.io/master/details/integration/adding-lvgl-to-your-project/connecting_lvgl.html#initializing-lvgl)
+
+Help [example](https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/86)
+
+1. Modify `main.c` adding `#include <lvgl.h>` and init at the `app_main`: `lv_init();`
+2. Init drivers for our display: `ST7789`
+   1. Doc [read](https://docs.lvgl.io/master/details/integration/driver/display/st7789.html)
+   2. Check this too: [DOC](https://github.com/lvgl/lvgl/blob/release/v9.2/docs/porting/display.rst#id2)
 
 5. Using 
 
@@ -157,3 +171,8 @@ Other:
 
 - https://components.espressif.com/components/lvgl/lvgl/versions/9.2.2
 - https://components.espressif.com/components/espressif/esp_lvgl_port/versions/2.5.0
+
+
+## ESP Home
+
+- https://esphome.io/cookbook/lvgl
