@@ -180,7 +180,7 @@ static esp_err_t lvgl_init(void)
     ESP_RETURN_ON_ERROR(esp_lcd_panel_io_register_event_callbacks(io_handle, &cbs, display), TAG, "esp_lcd_panel_io_register_event_callbacks error"); // I have tried to use 
     ESP_RETURN_ON_ERROR(esp_lcd_panel_init(panel_handle), TAG, "esp_lcd_panel_init error");
 
-    lv_display_set_resolution(display, DISP_HOR_RES, DISP_VER_RES);
+    // lv_display_set_resolution(display, DISP_HOR_RES, DISP_VER_RES);
     lv_display_set_physical_resolution(display, DISP_HOR_RES, DISP_VER_RES);
 
     /* Landscape orientation:
@@ -210,7 +210,7 @@ static esp_err_t lvgl_init(void)
     esp_lcd_panel_swap_xy(panel_handle, true);
 
     // Set this display as defaulkt for UI use
-    lv_display_set_default(display);
+    // lv_display_set_default(display);
 
     return ESP_OK;
 }
@@ -242,8 +242,8 @@ static esp_err_t display_init(void) {
         .lcd_param_bits = LCD_PARAM_BITS,
         .spi_mode = 0,
         .trans_queue_depth = 10,
-        .on_color_trans_done = notify_flush_ready,
-        .user_ctx = &display,
+        // .on_color_trans_done = notify_flush_ready,
+        // .user_ctx = &display,
     };
 
     // Attach the LCD to the SPI bus - repeat after example
@@ -253,7 +253,7 @@ static esp_err_t display_init(void) {
         .reset_gpio_num = DISP_GPIO_RST,
         .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_RGB,
         .bits_per_pixel = 16,
-        .flags = { .reset_active_high = 0 }  // Not in the example
+        // .flags = { .reset_active_high = 0 }  // Not in the example
     };
     
     ESP_LOGI(TAG, "Install ST7789T panel driver");
@@ -293,12 +293,13 @@ ARC Of CO2
 */
 static void value_changed_event_cb(lv_event_t * e);
 
-static void arc_co2(uint8_t co2_ppm) {
-    lv_obj_t * label = lv_label_create(lv_screen_active());
+static void arc_co2(lv_obj_t * drawing, uint8_t co2_ppm) {
+    lv_obj_clean(drawing);
+    lv_obj_t * label = lv_label_create(drawing);
 
     /*Create an Arc*/
-    lv_obj_t * arc = lv_arc_create(lv_screen_active());
-    lv_obj_set_size(arc, 150, 150);
+    lv_obj_t * arc = lv_arc_create(drawing);
+    lv_obj_set_size(arc, 120, 120);
     lv_arc_set_rotation(arc, 135);
     lv_arc_set_bg_angles(arc, 0, 270);
     lv_arc_set_value(arc, co2_ppm);
@@ -358,41 +359,48 @@ static void lvgl_task(void *arg) {
 
 
     // Create a simple label
-    lv_obj_t *label = lv_label_create(lv_scr_act());
+    lv_obj_t * start = lv_obj_create(lv_screen_active());
+    lv_obj_set_size(start, 320, 172);
+    lv_obj_set_pos(start, 2, 2);
+    
+    lv_obj_t *label = lv_label_create(start);
+
     lv_label_set_long_mode(label, LV_LABEL_LONG_WRAP);     /*Break the long lines*/
     lv_obj_set_width(label, DISP_VER_RES);  /*Set smaller width to make the lines wrap*/
     lv_obj_add_style(label, &style_txt_l, LV_STATE_DEFAULT);
     lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
     lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
-    void lv_obj_delete(lv_obj_t * obj);
-    vTaskDelay(pdMS_TO_TICKS(2000));
+    
+    ESP_LOGW(TAG, "Deleting initial object lable");
+    vTaskDelay(pdMS_TO_TICKS(25000));
+    // void lv_obj_delete(lv_obj_t * start);
+    lv_obj_clean(start);
 
     long curtime = esp_timer_get_time()/1000;
     int counter = 0;
 
     // Handle LVGL tasks
     while (1) {
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(100));
         lv_task_handler();
 
         if (esp_timer_get_time()/1000 - curtime > 1000) {
             curtime = esp_timer_get_time()/1000;
 
-            // char textlabel[20];
-            // sprintf(textlabel, "This is counter: %u\n", counter);
-            // printf(textlabel);
+            char textlabel[20];
+            sprintf(textlabel, "This is counter: %u\n", counter);
+            printf(textlabel);
             // lv_obj_add_style(label, &style_txt_lg, LV_STATE_DEFAULT);
             // lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
             // lv_label_set_text(label, textlabel);
-
-            arc_co2(counter);
+            
+            arc_co2(start, counter);
 
             // ESP_LOGW(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
             // vTaskDelay(pdMS_TO_TICKS(15000));
             // lv_label_set_text(ui_Label1, "START");
             // ESP_LOGW(TAG, "Called SquareLine LVGL UI objects once at init. Sleep 5 sec.");
             // vTaskDelay(pdMS_TO_TICKS(25000));
-
             counter++;
         }
     }
