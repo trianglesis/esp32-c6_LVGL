@@ -18,7 +18,7 @@
 #include "lvgl.h"
 
 // pictures
-// #include "ui/ui.h"
+#include "ui/ui.h"
 
 /*
 This file was compiled from multiple sources and help topics:
@@ -348,60 +348,67 @@ static void lvgl_task(void *arg) {
         while (1);
     }
 
-    // Style for text
-    static lv_style_t style_txt_l;
-    lv_style_init(&style_txt_l);
-    lv_style_set_text_font(&style_txt_l, &lv_font_montserrat_18);  /* Set a larger font */
+    // // Style for text
+    // static lv_style_t style_txt_l;
+    // lv_style_init(&style_txt_l);
+    // lv_style_set_text_font(&style_txt_l, &lv_font_montserrat_18);  /* Set a larger font */
 
-    static lv_style_t style_txt_lg;
-    lv_style_init(&style_txt_lg);
-    lv_style_set_text_font(&style_txt_lg, &lv_font_montserrat_28);  /* Set a larger font */
+    // static lv_style_t style_txt_lg;
+    // lv_style_init(&style_txt_lg);
+    // lv_style_set_text_font(&style_txt_lg, &lv_font_montserrat_28);  /* Set a larger font */
 
-
-    // Create a simple label
-    lv_obj_t * start = lv_obj_create(lv_screen_active());
-    lv_obj_set_size(start, 320, 172);
-    lv_obj_set_pos(start, 2, 2);
+    // // Create a simple label
+    // lv_obj_t * start = lv_obj_create(lv_screen_active());
+    // lv_obj_set_size(start, 320, 172);
+    // lv_obj_set_pos(start, 2, 2);
     
-    lv_obj_t *label = lv_label_create(start);
+    // lv_obj_t *label = lv_label_create(start);
 
-    lv_label_set_long_mode(label, LV_LABEL_LONG_WRAP);     /*Break the long lines*/
-    lv_obj_set_width(label, DISP_VER_RES);  /*Set smaller width to make the lines wrap*/
-    lv_obj_add_style(label, &style_txt_l, LV_STATE_DEFAULT);
-    lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
-    lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
+    // lv_label_set_long_mode(label, LV_LABEL_LONG_WRAP);     /*Break the long lines*/
+    // lv_obj_set_width(label, DISP_VER_RES);  /*Set smaller width to make the lines wrap*/
+    // lv_obj_add_style(label, &style_txt_l, LV_STATE_DEFAULT);
+    // lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+    // lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
     
-    ESP_LOGW(TAG, "Deleting initial object lable");
-    vTaskDelay(pdMS_TO_TICKS(25000));
-    // void lv_obj_delete(lv_obj_t * start);
-    lv_obj_clean(start);
+    // ESP_LOGW(TAG, "Deleting initial object lable");
+    // vTaskDelay(pdMS_TO_TICKS(25000));
+    // // void lv_obj_delete(lv_obj_t * start);
+    // lv_obj_clean(start);
 
     long curtime = esp_timer_get_time()/1000;
     int counter = 0;
+    ui_init();
 
     // Handle LVGL tasks
     while (1) {
-        vTaskDelay(pdMS_TO_TICKS(100));
+        vTaskDelay(pdMS_TO_TICKS(10));
         lv_task_handler();
 
         if (esp_timer_get_time()/1000 - curtime > 1000) {
             curtime = esp_timer_get_time()/1000;
 
-            char textlabel[20];
-            sprintf(textlabel, "This is counter: %u\n", counter);
-            printf(textlabel);
+            // char textlabel[20];
+            // sprintf(textlabel, "This is counter: %u\n", counter);
+            // printf(textlabel);
             // lv_obj_add_style(label, &style_txt_lg, LV_STATE_DEFAULT);
             // lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
             // lv_label_set_text(label, textlabel);
             
-            arc_co2(start, counter);
+            // arc_co2(start, counter);
+            lv_arc_set_value(ui_Arc1, counter);
 
             // ESP_LOGW(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
             // vTaskDelay(pdMS_TO_TICKS(15000));
             // lv_label_set_text(ui_Label1, "START");
             // ESP_LOGW(TAG, "Called SquareLine LVGL UI objects once at init. Sleep 5 sec.");
             // vTaskDelay(pdMS_TO_TICKS(25000));
-            counter++;
+
+            // Make up and down
+            if (counter == 100) {
+                counter = 0;
+            } else {
+                counter++;
+            }
         }
     }
 }
