@@ -152,7 +152,7 @@ static void flush_cb(lv_display_t* disp, const lv_area_t* area, uint8_t* px_map)
     int y2 = area->y2 + Offset_Y;
     
     // uncomment the following line if the colors are wrong
-    lv_draw_sw_rgb565_swap(px_map, (x2 + 1 - x1) * (y2 + 1 - y1)); // I have tried with and without this
+    lv_draw_sw_rgb565_swap(px_map, (x2 + 1 - x1) * (y2 + 1 - y1));
 
     esp_lcd_panel_draw_bitmap((esp_lcd_panel_handle_t)lv_display_get_user_data(disp), x1, y1, x2 + 1, y2 + 1, px_map);
 }
@@ -210,17 +210,12 @@ static esp_err_t lvgl_init(void)
     esp_lcd_panel_swap_xy(panel_handle, true);
 
     // Set this display as defaulkt for UI use
-    // lv_display_set_default(display);
+    lv_display_set_default(display);
 
     return ESP_OK;
 }
 
 static esp_err_t display_init(void) {
-
-    ESP_LOGI(TAG, "Turn on LCD backlight first, to see display content early!");
-    BK_Init();  // Back light
-    BK_Light(100);
-
     // LCD initialization - enable from example
     ESP_LOGD(TAG, "Initialize SPI bus");
     spi_bus_config_t buscfg = { 
@@ -242,8 +237,8 @@ static esp_err_t display_init(void) {
         .lcd_param_bits = LCD_PARAM_BITS,
         .spi_mode = 0,
         .trans_queue_depth = 10,
-        // .on_color_trans_done = notify_flush_ready,
-        // .user_ctx = &display,
+        .on_color_trans_done = notify_flush_ready,
+        .user_ctx = &display,
     };
 
     // Attach the LCD to the SPI bus - repeat after example
@@ -253,7 +248,7 @@ static esp_err_t display_init(void) {
         .reset_gpio_num = DISP_GPIO_RST,
         .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_RGB,
         .bits_per_pixel = 16,
-        // .flags = { .reset_active_high = 0 }  // Not in the example
+        .flags = { .reset_active_high = 0 }  // Not in the example
     };
     
     ESP_LOGI(TAG, "Install ST7789T panel driver");
@@ -266,6 +261,9 @@ static esp_err_t display_init(void) {
     // Turn on the screen
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));
 
+    ESP_LOGI(TAG, "Turn on LCD backlight first, to see display content early!");
+    BK_Init();  // Back light
+    BK_Light(100);
     return ESP_OK;
 }
 
