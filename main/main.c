@@ -15,11 +15,10 @@
 #include "driver/ledc.h"
 #include "esp_check.h"
 #include "esp_err.h"
-#include "esp_log.h"
 #include "lvgl.h"
 
 // pictures
-#include "ui/ui.h"
+// #include "ui/ui.h"
 
 /*
 This file was compiled from multiple sources and help topics:
@@ -46,8 +45,10 @@ https://github.com/lvgl/lvgl/blob/release/v9.2/docs/porting/display.rst#id2
 static const char *TAG = "playground";
 
 /* LCD size */
-#define DISP_HOR_RES   172
-#define DISP_VER_RES   320
+#define DISP_HOR_RES_HW     172 // 172 - original
+#define DISP_VER_RES_HW     320 // 320 - original
+#define DISP_HOR_RES        DISP_HOR_RES_HW
+#define DISP_VER_RES        DISP_VER_RES_HW
 
 /* LCD settings */
 #define DISP_DRAW_BUFF_HEIGHT 50
@@ -145,9 +146,6 @@ static bool notify_flush_ready(esp_lcd_panel_io_handle_t panel_io, esp_lcd_panel
 
 // Added offset for ROTATED diaplay!
 static void flush_cb(lv_display_t* disp, const lv_area_t* area, uint8_t* px_map) {
-    // Old
-    // int y1 = area->y1;
-    // int y2 = area->y2;
     // Rotated
     // https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/86
     int x1 = area->x1 + Offset_X;
@@ -184,8 +182,8 @@ static esp_err_t lvgl_init(void)
     ESP_RETURN_ON_ERROR(esp_lcd_panel_io_register_event_callbacks(io_handle, &cbs, display), TAG, "esp_lcd_panel_io_register_event_callbacks error"); // I have tried to use 
     ESP_RETURN_ON_ERROR(esp_lcd_panel_init(panel_handle), TAG, "esp_lcd_panel_init error");
 
-    // lv_display_set_resolution(display, DISP_HOR_RES, DISP_VER_RES);
-    // lv_display_set_physical_resolution(display, DISP_HOR_RES, DISP_VER_RES);
+    lv_display_set_resolution(display, DISP_HOR_RES_HW, DISP_VER_RES_HW);
+    lv_display_set_physical_resolution(display, DISP_HOR_RES_HW, DISP_VER_RES_HW);
 
     /* Landscape orientation:
     270deg = USB on the left side - landscape orientation
@@ -210,11 +208,11 @@ static esp_err_t lvgl_init(void)
     */
     
     // lv_display_set_rotation(display, LV_DISPLAY_ROTATION_270);
-    // esp_lcd_panel_mirror(panel_handle, false, true);
-    // esp_lcd_panel_swap_xy(panel_handle, true);
+    esp_lcd_panel_mirror(panel_handle, false, true);
+    esp_lcd_panel_swap_xy(panel_handle, true);
 
     // Set this display as defaulkt for UI use
-    // lv_display_set_default(display);
+    lv_display_set_default(display);
 
     return ESP_OK;
 }
@@ -246,8 +244,8 @@ static esp_err_t display_init(void) {
         .lcd_param_bits = LCD_PARAM_BITS,
         .spi_mode = 0,
         .trans_queue_depth = 10,
-        // .on_color_trans_done = notify_flush_ready,
-        // .user_ctx = &display,
+        .on_color_trans_done = notify_flush_ready,
+        .user_ctx = &display,
     };
 
     // Attach the LCD to the SPI bus - repeat after example
@@ -257,7 +255,7 @@ static esp_err_t display_init(void) {
         .reset_gpio_num = DISP_GPIO_RST,
         .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_RGB,
         .bits_per_pixel = 16,
-        // .flags = { .reset_active_high = 0 }  // Not in the example
+        .flags = { .reset_active_high = 0 }  // Not in the example
     };
     
     ESP_LOGI(TAG, "Install ST7789T panel driver");
@@ -294,7 +292,7 @@ static esp_err_t lvgl_tick_init(void)
 
 static void lvgl_task(void *arg) {
 
-    vTaskDelay(1000/portTICK_PERIOD_MS);
+    vTaskDelay(pdMS_TO_TICKS(10));
 
     esp_log_level_set("lcd_panel", ESP_LOG_VERBOSE);
     esp_log_level_set("lcd_panel.st7789", ESP_LOG_VERBOSE);
@@ -319,17 +317,11 @@ static void lvgl_task(void *arg) {
         while (1);
     }
 
-    ESP_LOGW(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
-    vTaskDelay(pdMS_TO_TICKS(15000));
-    lv_label_set_text(ui_Label1, "START");
-    ESP_LOGW(TAG, "Called SquareLine LVGL UI objects once at init. Sleep 5 sec.");
-    vTaskDelay(pdMS_TO_TICKS(15000));
-
     // Create a simple label
     lv_obj_t *label = lv_label_create(lv_scr_act());
     lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
     lv_label_set_long_mode(label, LV_LABEL_LONG_WRAP);     /*Break the long lines*/
-    lv_obj_set_width(label, DISP_HOR_RES - 2);  /*Set smaller width to make the lines wrap*/
+    lv_obj_set_width(label, DISP_VER_RES_HW - 2);  /*Set smaller width to make the lines wrap*/
     lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 
     long curtime = esp_timer_get_time()/1000;
@@ -337,7 +329,7 @@ static void lvgl_task(void *arg) {
 
     // Handle LVGL tasks
     while (1) {
-        vTaskDelay(pdMS_TO_TICKS(2500));
+        vTaskDelay(pdMS_TO_TICKS(10));
         lv_task_handler();
 
         if (esp_timer_get_time()/1000 - curtime > 1000) {
@@ -349,9 +341,11 @@ static void lvgl_task(void *arg) {
             lv_label_set_text(label, textlabel);
             lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 
-            // ESP_LOGW(TAG, "Now calling SquareLine LVGL UI objects in loop.");
-            // lv_arc_set_value(ui_Arc1, 8888);
-            // lv_label_set_text(ui_Label1, "CO2 PPM");
+            // ESP_LOGW(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
+            // vTaskDelay(pdMS_TO_TICKS(15000));
+            // lv_label_set_text(ui_Label1, "START");
+            // ESP_LOGW(TAG, "Called SquareLine LVGL UI objects once at init. Sleep 5 sec.");
+            // vTaskDelay(pdMS_TO_TICKS(25000));
 
             counter++;
         }
@@ -360,14 +354,14 @@ static void lvgl_task(void *arg) {
 
 void app_main() {
 
-    vTaskDelay(1000/portTICK_PERIOD_MS);
+    vTaskDelay(pdMS_TO_TICKS(1000));
 
     TaskHandle_t taskHandle = NULL;
     BaseType_t res = xTaskCreatePinnedToCore(lvgl_task, "LVGL task", 8192, NULL, 4, &taskHandle, 0); // stack, params, prio, handle, core
 
     while(true) {
 
-        vTaskDelay(100/portTICK_PERIOD_MS);
+        vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
 

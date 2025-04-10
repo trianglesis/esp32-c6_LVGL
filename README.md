@@ -160,6 +160,16 @@ Help [example](https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecti
 6. Create a dir for LVGL 'Squareline studio' export: `{PROJECT_ROOT}/components/screen/`
    1. It's not used yet
 
+# Square Line setup
+
+Using as example: `https://github.com/hiruna/esp-idf-t-display-s3/tree/main`
+
+Create a board:
+
+`C:\Program Files\SquareLine Studio 1.5.1\boards..`
+OR
+`C:\Users\%USER%\SquareLine\boards`
+
 # Emulator
 
 Using VS code:
@@ -200,3 +210,9 @@ Other:
 ## ESP Home
 
 - https://esphome.io/cookbook/lvgl
+
+## ETC
+
+Similar projects for reference
+
+- https://github.com/hiruna/esp-idf-t-display-s3

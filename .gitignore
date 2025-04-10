@@ -9,3 +9,5 @@ __EX__components/
 !components/lv_conf.h
 SquareLineProj/autosave/
 SquareLineProj/backup/
+SquareLineProj/cache/
+SquareLineProj/assets/
