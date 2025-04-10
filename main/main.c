@@ -45,10 +45,8 @@ https://github.com/lvgl/lvgl/blob/release/v9.2/docs/porting/display.rst#id2
 static const char *TAG = "playground";
 
 /* LCD size */
-#define DISP_HOR_RES_HW     172 // 172 - original
-#define DISP_VER_RES_HW     320 // 320 - original
-#define DISP_HOR_RES        DISP_HOR_RES_HW
-#define DISP_VER_RES        DISP_VER_RES_HW
+#define DISP_HOR_RES        172
+#define DISP_VER_RES        320
 
 /* LCD settings */
 #define DISP_DRAW_BUFF_HEIGHT 50
@@ -71,8 +69,8 @@ static const char *TAG = "playground";
 #define LCD_PARAM_BITS         8
 
 // Rotate 90deg and compensate buffer change
-#define Offset_X 34 // 0 IF ROTATED 270deg
-#define Offset_Y 0  // 34 IF ROTATED 270deg
+#define Offset_X 0 // 0 IF NOT ROTATED 270deg
+#define Offset_Y 34  // 34 IF ROTATED 270deg
 
 #define LEDC_HS_TIMER          LEDC_TIMER_0
 #define LEDC_LS_MODE           LEDC_LOW_SPEED_MODE
@@ -182,8 +180,8 @@ static esp_err_t lvgl_init(void)
     ESP_RETURN_ON_ERROR(esp_lcd_panel_io_register_event_callbacks(io_handle, &cbs, display), TAG, "esp_lcd_panel_io_register_event_callbacks error"); // I have tried to use 
     ESP_RETURN_ON_ERROR(esp_lcd_panel_init(panel_handle), TAG, "esp_lcd_panel_init error");
 
-    lv_display_set_resolution(display, DISP_HOR_RES_HW, DISP_VER_RES_HW);
-    lv_display_set_physical_resolution(display, DISP_HOR_RES_HW, DISP_VER_RES_HW);
+    lv_display_set_resolution(display, DISP_HOR_RES, DISP_VER_RES);
+    lv_display_set_physical_resolution(display, DISP_HOR_RES, DISP_VER_RES);
 
     /* Landscape orientation:
     270deg = USB on the left side - landscape orientation
@@ -207,7 +205,7 @@ static esp_err_t lvgl_init(void)
     https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/60
     */
     
-    // lv_display_set_rotation(display, LV_DISPLAY_ROTATION_270);
+    lv_display_set_rotation(display, LV_DISPLAY_ROTATION_270);
     esp_lcd_panel_mirror(panel_handle, false, true);
     esp_lcd_panel_swap_xy(panel_handle, true);
 
@@ -321,7 +319,7 @@ static void lvgl_task(void *arg) {
     lv_obj_t *label = lv_label_create(lv_scr_act());
     lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
     lv_label_set_long_mode(label, LV_LABEL_LONG_WRAP);     /*Break the long lines*/
-    lv_obj_set_width(label, DISP_VER_RES_HW - 2);  /*Set smaller width to make the lines wrap*/
+    lv_obj_set_width(label, DISP_VER_RES);  /*Set smaller width to make the lines wrap*/
     lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 
     long curtime = esp_timer_get_time()/1000;
@@ -339,6 +337,7 @@ static void lvgl_task(void *arg) {
             sprintf(textlabel, "This is counter: %u\n", counter);
             printf(textlabel);
             lv_label_set_text(label, textlabel);
+            lv_obj_set_width(label, DISP_VER_RES);  /*Set smaller width to make the lines wrap*/
             lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 
             // ESP_LOGW(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
