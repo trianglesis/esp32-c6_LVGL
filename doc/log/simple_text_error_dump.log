@@ -1,166 +1,702 @@
+PS D:\Projects\ESP\projects\ESP32-C6-OLED\esp32-c6_LVGL> $env:IDF_PATH = 'd:\Projects\ESP\Espressif\v5.4.1\esp-idf';
 PS D:\Projects\ESP\projects\ESP32-C6-OLED\esp32-c6_LVGL>  & 'd:\Projects\ESP\Espressif\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe' 'd:\Projects\ESP\Espressif\v5.4.1\esp-idf\tools\idf_monitor.py' -p COM7 -b 115200 --toolchain-prefix riscv32-esp-elf- --make '''d:\Projects\ESP\Espressif\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe'' ''d:\Projects\ESP\Espressif\v5.4.1\esp-idf\tools\idf.py''' --target esp32c6 'd:\Projects\ESP\projects\ESP32-C6-OLED\esp32-c6_LVGL\build\esp32-c6_LVGL.elf'
 --- Warning: GDB cannot open serial ports accessed as COMx
 --- Using \\.\COM7 instead...
 --- esp-idf-monitor 1.6.0 on \\.\COM7 115200
 --- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
-I (101) esp_image: segment 2: paddr=00028020 vaddr=42000020 sizeESP-ROM:esp32c6-20220919
+I (107) esp_image: segment 2: paddr=0002ec48 vaddr=4080dbd0 sizeESP-ROM:esp32c6-20220919
 Build:Sep 19 2022
 rst:0x15 (USB_UART_HPSYS),boot:0x6e (SPI_FAST_FLASH_BOOT)
-Saved PC:0x40805444
---- 0x40805444: rv_utils_wait_for_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/riscv/include/riscv/rv_utils.h:62
+Saved PC:0x40805530
+--- 0x40805530: rv_utils_wait_for_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/riscv/include/riscv/rv_utils.h:62
 ---  (inlined by) esp_cpu_wait_for_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/cpu.c:62
 
 SPIWP:0xee
 mode:DIO, clock div:2
 load:0x40875720,len:0x16b8
 load:0x4086c110,len:0xe84
-load:0x4086e610,len:0x3058
+load:0x4086e610,len:0x3054
 entry 0x4086c11a
 I (23) boot: ESP-IDF v5.4.1 2nd stage bootloader
-I (23) boot: compile time Apr 10 2025 09:51:15
+I (23) boot: compile time Apr 10 2025 10:48:19
 I (24) boot: chip revision: v0.1
 I (24) boot: efuse block revision: v0.3
 I (26) boot.esp32c6: SPI Speed      : 80MHz
 I (30) boot.esp32c6: SPI Mode       : DIO
-I (34) boot.esp32c6: SPI Flash Size : 2MB
+I (34) boot.esp32c6: SPI Flash Size : 4MB
 I (38) boot: Enabling RNG early entropy source...
 I (42) boot: Partition Table:
 I (45) boot: ## Label            Usage          Type ST Offset   Length
 I (51) boot:  0 nvs              WiFi data        01 02 00009000 00006000
 I (58) boot:  1 phy_init         RF data          01 01 0000f000 00001000
-I (64) boot:  2 factory          factory app      00 00 00010000 00100000
+I (64) boot:  2 factory          factory app      00 00 00010000 00200000
 I (71) boot: End of partition table
-I (74) esp_image: segment 0: paddr=00010020 vaddr=42050020 size=106dch ( 67292) map
-I (94) esp_image: segment 1: paddr=00020704 vaddr=40800000 size=07914h ( 30996) load
-I (101) esp_image: segment 2: paddr=00028020 vaddr=42000020 size=4871ch (296732) map
-I (157) esp_image: segment 3: paddr=00070744 vaddr=40807914 size=0616ch ( 24940) load
-I (163) esp_image: segment 4: paddr=000768b8 vaddr=4080da80 size=01914h (  6420) load
-I (165) esp_image: segment 5: paddr=000781d4 vaddr=50000000 size=0001ch (    28) load
-I (172) boot: Loaded app from partition at offset 0x10000
-I (174) boot: Disabling RNG early entropy source...
-I (190) cpu_start: Unicore app
-I (199) cpu_start: Pro cpu start user code
-I (199) cpu_start: cpu freq: 160000000 Hz
-I (199) app_init: Application information:
-I (199) app_init: Project name:     esp32-c6_LVGL
-I (203) app_init: App version:      4ad6235-dirty
-I (208) app_init: Compile time:     Apr 10 2025 09:49:47
-I (213) app_init: ELF file SHA256:  74003468b...
-I (217) app_init: ESP-IDF:          v5.4.1
-I (221) efuse_init: Min chip rev:     v0.0
-I (225) efuse_init: Max chip rev:     v0.99
-I (229) efuse_init: Chip rev:         v0.1
-I (233) heap_init: Initializing. RAM available for dynamic allocation:
-I (239) heap_init: At 40820520 len 0005C0F0 (368 KiB): RAM
-I (244) heap_init: At 4087C610 len 00002F54 (11 KiB): RAM
-I (249) heap_init: At 5000001C len 00003FCC (15 KiB): RTCRAM
-I (255) spi_flash: detected chip: generic
-I (258) spi_flash: flash io: dio
-W (261) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Using the size in the binary image header.
-I (273) sleep_gpio: Configure to isolate all GPIO pins in sleep state
-I (280) sleep_gpio: Enable automatic switching of GPIO sleep configuration
-I (286) coexist: coex firmware version: e727207
-I (291) coexist: coexist rom version 5b8dcfa
-I (295) main_task: Started on CPU0
-I (295) main_task: Calling app_main()
-I (2295) playground: Turn on LCD backlight first, to see display content early!
-I (2295) playground: Turn off LCD backlight
-I (2295) gpio: GPIO[22]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
-I (2295) playground: Set LCD backlight
-I (2305) gpio: GPIO[15]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 
-I (2315) playground: Install ST7789T panel driver
-I (2315) gpio: GPIO[21]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 
+I (74) esp_image: segment 0: paddr=00010020 vaddr=42050020 size=11054h ( 69716) map
+I (94) esp_image: segment 1: paddr=0002107c vaddr=40800000 size=0dbc4h ( 56260) load
+I (107) esp_image: segment 2: paddr=0002ec48 vaddr=4080dbd0 size=013d0h (  5072) load
+I (109) esp_image: segment 3: paddr=00030020 vaddr=42000020 size=4fc1ch (326684) map
+I (171) esp_image: segment 4: paddr=0007fc44 vaddr=4080efa0 size=00568h (  1384) load
+I (173) esp_image: segment 5: paddr=000801b4 vaddr=50000000 size=0001ch (    28) load
+I (179) boot: Loaded app from partition at offset 0x10000
+I (180) boot: Disabling RNG early entropy source...
+I (197) cpu_start: Unicore app
+D (197) cpu_start: Pro cpu up
+D (205) clk: RTC_SLOW_CLK calibration value: 3562304
+D (210) cpu_start: calling init function: 0x42000236 on core: 0
+--- 0x42000236: __esp_system_init_fn_init_efuse_check at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/efuse/src/esp_efuse_startup.c:37
+
+D (211) cpu_start: calling init function: 0x42000400 on core: 0
+--- 0x42000400: __esp_system_init_fn_init_show_cpu_freq at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:58
+
+I (211) cpu_start: Pro cpu start user code
+I (214) cpu_start: cpu freq: 160000000 Hz
+D (218) cpu_start: calling init function: 0x420000e0 on core: 0
+--- 0x420000e0: __esp_system_init_fn_init_show_app_info at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_app_format/esp_app_desc.c:123
+
+I (224) app_init: Application information:
+I (227) app_init: Project name:     esp32-c6_LVGL
+I (232) app_init: App version:      f34caae-dirty
+I (236) app_init: Compile time:     Apr 10 2025 10:48:36
+I (241) app_init: ELF file SHA256:  7438bc4ab...
+I (246) app_init: ESP-IDF:          v5.4.1
+D (249) cpu_start: calling init function: 0x42000248 on core: 0
+--- 0x42000248: __esp_system_init_fn_init_efuse_show_app_info at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/efuse/src/esp_efuse_startup.c:47
+
+I (256) efuse_init: Min chip rev:     v0.0
+I (259) efuse_init: Max chip rev:     v0.99
+I (263) efuse_init: Chip rev:         v0.1
+D (267) cpu_start: calling init function: 0x42002c40 on core: 0
+--- 0x42002c40: __esp_system_init_fn_init_heap at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/heap/heap_caps_init.c:25
+
+D (272) memory_layout: Checking 5 reserved memory ranges:
+D (277) memory_layout: Reserved memory range 0x40800000 - 0x4080dbd0
+--- 0x40800000: _vector_table at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/riscv/vectors_intc.S:54
+
+D (283) memory_layout: Reserved memory range 0x4080dbd0 - 0x408206d0
+D (290) memory_layout: Reserved memory range 0x4087f564 - 0x40880000
+D (296) memory_layout: Reserved memory range 0x50000000 - 0x5000001c
+D (302) memory_layout: Reserved memory range 0x50003fe8 - 0x50004000
+D (308) memory_layout: Building list of available memory regions:
+D (314) memory_layout: Available memory region 0x408206d0 - 0x40840000
+D (320) memory_layout: Available memory region 0x40840000 - 0x40860000
+D (326) memory_layout: Available memory region 0x40860000 - 0x4087c610
+D (332) memory_layout: Available memory region 0x4087c610 - 0x4087f564
+D (339) memory_layout: Available memory region 0x5000001c - 0x50003fe8
+I (345) heap_init: Initializing. RAM available for dynamic allocation:
+D (351) heap_init: New heap initialised at 0x408206d0
+I (356) heap_init: At 408206D0 len 0005BF40 (367 KiB): RAM
+I (361) heap_init: At 4087C610 len 00002F54 (11 KiB): RAM
+D (366) heap_init: New heap initialised at 0x5000001c
+I (371) heap_init: At 5000001C len 00003FCC (15 KiB): RTCRAM
+D (376) cpu_start: calling init function: 0x420081ca on core: 0
+--- 0x420081ca: __esp_system_init_fn_esp_timer_init_nonos at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_timer/src/esp_timer_init.c:28
+
+D (382) cpu_start: calling init function: 0x42007c80 on core: 0
+--- 0x42007c80: __esp_system_init_fn_init_newlib at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/newlib/newlib_init.c:157
+
+D (388) cpu_start: calling init function: 0x42000478 on core: 0
+--- 0x42000478: __esp_system_init_fn_init_brownout at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:67
+
+D (394) intr_alloc: Connected src 15 to int 2 (cpu 0)
+D (398) cpu_start: calling init function: 0x42000486 on core: 0
+--- 0x42000486: __esp_system_init_fn_init_newlib_time at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:81
+
+D (404) cpu_start: calling init function: 0x42009724 on core: 0
+--- 0x42009724: __esp_system_init_fn_init_vfs_uart at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_uart/src/uart_vfs.c:1146
+
+D (409) cpu_start: calling init function: 0x4200abb8 on core: 0
+--- 0x4200abb8: __esp_system_init_fn_init_vfs_usj_sec at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag_vfs.c:628
+
+D (415) cpu_start: calling init function: 0x4200c0ce on core: 0
+--- 0x4200c0ce: __esp_system_init_fn_init_vfs_nullfs at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/vfs/nullfs.c:322
+
+D (421) cpu_start: calling init function: 0x4200ae6a on core: 0
+--- 0x4200ae6a: __esp_system_init_fn_init_vfs_console at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_vfs_console/vfs_console.c:247
+
+D (427) cpu_start: calling init function: 0x42007cfc on core: 0
+--- 0x42007cfc: __esp_system_init_fn_init_newlib_stdio at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/newlib/newlib_init.c:202
+
+D (432) cpu_start: calling init function: 0x42000496 on core: 0
+--- 0x42000496: __esp_system_init_fn_init_flash at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:88
+
+D (438) spi_flash: trying chip: generic
+I (441) spi_flash: detected chip: generic
+I (445) spi_flash: flash io: dio
+D (448) cpu_start: calling init function: 0x4200032e on core: 0
+--- 0x4200032e: __esp_system_init_fn_init_efuse at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/efuse/src/esp_efuse_startup.c:145
+
+D (454) cpu_start: calling init function: 0x4204d3c6
+--- 0x4204d3c6: _GLOBAL__sub_I__ZN17__eh_globals_init7_S_initE at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/build/build-cc-gcc-final/riscv32-esp-elf/rv32imac_zicsr_zifencei/ilp32/no-rtti/libstdc++-v3/include/riscv32-esp-elf/bits/gthr-default.h:721
+---  (inlined by) __eh_globals_init::__eh_globals_init() at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/src/gcc/libstdc++-v3/libsupc++/eh_globals.cc:105
+---  (inlined by) __static_initialization_and_destruction_0 at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/src/gcc/libstdc++-v3/libsupc++/eh_globals.cc:126
+---  (inlined by) _GLOBAL__sub_I__ZN17__eh_globals_init7_S_initE at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/src/gcc/libstdc++-v3/libsupc++/eh_globals.cc:162
+
+D (458) cpu_start: calling init function: 0x420489d4
+--- 0x420489d4: _GLOBAL__sub_I__ZN3nvs4PageC2Ev at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/nvs_flash/src/nvs_page.cpp:1158
+
+D (463) cpu_start: calling init function: 0x408067aa
+--- 0x408067aa: enable_timer_group0_for_calibration at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/port/esp32c6/rtc_time.c:277
+
+D (468) cpu_start: calling init function: 0x40806e6c
+--- 0x40806e6c: tlsf_set_rom_patches at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_rom/patches/esp_rom_tlsf.c:172
+
+D (472) cpu_start: calling init function: 0x42001344
+--- 0x42001344: esp_reset_reason_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/port/soc/esp32c6/reset_reason.c:72
+
+D (477) cpu_start: calling init function: 0x420488fa on core: 0
+--- 0x420488fa: __esp_system_init_fn_esp_timer_init_os at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_timer/src/esp_timer.c:566
+
+D (483) intr_alloc: Connected src 59 to int 5 (cpu 0)
+D (487) cpu_start: calling init function: 0x42001f60 on core: 0
+--- 0x42001f60: __esp_system_init_fn_esp_hw_stack_guard_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/hw_stack_guard.c:15
+
+D (493) cpu_start: calling init function: 0x42048048 on core: 0
+--- 0x42048048: _lp_clkrst_ll_enable_rng_clock at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/esp32c6/include/hal/lp_clkrst_ll.h:24
+---  (inlined by) __esp_system_init_fn_init_rng_clock at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/hw_random.c:106
+
+D (499) cpu_start: calling init function: 0x42003006 on core: 0
+--- 0x42003006: __esp_system_init_fn_esp_security_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_security/src/init.c:38
+
+D (504) cpu_start: calling init function: 0x42003ca2 on core: 0
+--- 0x42003ca2: __esp_system_init_fn_esp_sleep_startup_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/sleep_gpio.c:194
+
+I (510) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (516) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+D (523) cpu_start: calling init function: 0x420054ae on core: 0
+--- 0x420054ae: __esp_system_init_fn_sleep_clock_startup_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/lowpower/port/esp32c6/sleep_clock.c:107
+
+D (528) cpu_start: calling init function: 0x420004d8 on core: 0
+--- 0x420004d8: __esp_system_init_fn_init_coexist at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:134
+
+I (534) coexist: coex firmware version: e727207
+I (538) coexist: coexist rom version 5b8dcfa
+D (542) cpu_start: calling init function: 0x4200a3ca on core: 0
+--- 0x4200a3ca: __esp_system_init_fn_usb_serial_jtag_conn_status_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag_connection_monitor.c:75
+
+D (548) cpu_start: calling init function: 0x420004f0 on core: 0
+--- 0x420004f0: __esp_system_init_fn_init_disable_rtc_wdt at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:143
+
+D (554) intr_alloc: Connected src 22 to int 8 (cpu 0)
+D (558) app_start: Starting scheduler on CPU0
+D (562) intr_alloc: Connected src 57 to int 9 (cpu 0)
+I (562) main_task: Started on CPU0
+D (562) heap_init: New heap initialised at 0x4087c610
+D (562) intr_alloc: Connected src 53 to int 10 (cpu 0)
+I (572) main_task: Calling app_main()
+I (2572) playground: Turn on LCD backlight first, to see display content early!
+I (2572) playground: Turn off LCD backlight
+I (2572) gpio: GPIO[22]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
+D (2572) ledc: Using clock source 4 (in slow mode), divisor: 0x1f4
+D (2582) ledc: In slow speed mode, global clk set: 4
+D (2582) ledc: LEDC_PWM CHANNEL 0|GPIO 22|Duty 0000|Time 0
+D (2592) intr_alloc: Connected src 45 to int 11 (cpu 0)
+I (2592) playground: Set LCD backlight
+D (2602) playground: Initialize SPI bus
+D (2602) gdma: new group (0) at 0x40826344
+D (2612) gdma: new pair (0,0) at 0x408263c4
+D (2612) gdma: new tx channel (0,0) at 0x4082630c
+D (2612) gdma: new rx channel (0,0) at 0x408263e4
+D (2622) spi: SPI2 use gpio matrix.
+D (2622) intr_alloc: Connected src 72 to int 12 (cpu 0)
+D (2632) spi_hal: eff: 11428, limit: 80000k(/0), 0 dummy, -1 delay
+D (2632) spi_master: SPI2: New device added to CS0, effective clock: 11428571 Hz
+I (2642) gpio: GPIO[15]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
+D (2652) lcd_panel.io.spi: new spi lcd panel io @0x408266f4, max_trans_bytes: 32768
+I (2652) playground: Install ST7789T panel driver
+I (2662) gpio: GPIO[21]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
+D (2672) lcd_panel.st7789: new st7789 panel @0x40826d14
+D (2692) spi_master: device0 locked the bus
+D (2692) spi_master: device0 release bus
+D (2792) spi_master: device0 locked the bus
+D (2792) spi_master: device0 release bus
+D (2792) spi_master: device0 locked the bus
+D (2792) spi_master: device0 release bus
+D (2792) spi_master: device0 locked the bus
+D (2792) spi_master: device0 release bus
+D (2802) spi_master: device0 locked the bus
+D (2802) spi_master: device0 release bus
+D (2812) spi_master: device0 locked the bus
+D (2812) spi_master: device0 release bus
+D (2912) spi_master: device0 locked the bus
+D (2912) spi_master: device0 release bus
+D (2912) spi_master: device0 locked the bus
+D (2912) spi_master: device0 release bus
+D (2912) spi_master: device0 locked the bus
+D (2912) spi_master: device0 release bus
+D (5432) spi_master: device0 locked the bus
+D (5432) spi_master: device0 release bus
+D (5432) spi_master: device0 locked the bus
+D (5432) spi_master: device0 release bus
+D (5442) spi_master: device0 locked the bus
+D (5442) spi_master: device0 release bus
+This is counter: 0
+D (7952) spi_master: device0 locked the bus
+D (7952) spi_master: device0 release bus
+D (7952) spi_master: device0 locked the bus
+D (7952) spi_master: device0 release bus
+D (7952) spi_master: device0 locked the bus
+D (7962) spi_master: device0 release bus
+This is counter: 1
+D (10462) spi_master: device0 locked the bus
+D (10462) spi_master: device0 release bus
+D (10462) spi_master: device0 locked the bus
+D (10462) spi_master: device0 release bus
+D (10462) spi_master: device0 locked the bus
+D (10472) spi_master: device0 release bus
+This is counter: 2
+D (12972) spi_master: device0 locked the bus
+D (12972) spi_master: device0 release bus
+D (12972) spi_master: device0 locked the bus
+D (12972) spi_master: device0 release bus
+D (12972) spi_master: device0 locked the bus
+D (12982) spi_master: device0 release bus
+This is counter: 3
+D (15482) spi_master: device0 locked the bus
+D (15482) spi_master: device0 release bus
+D (15482) spi_master: device0 locked the bus
+D (15482) spi_master: device0 release bus
+D (15482) spi_master: device0 locked the bus
+D (15492) spi_master: device0 release bus
+This is counter: 4
+D (17992) spi_master: device0 locked the bus
+D (17992) spi_master: device0 release bus
+D (17992) spi_master: device0 locked the bus
+D (17992) spi_master: device0 release bus
+D (17992) spi_master: device0 locked the bus
+D (18002) spi_master: device0 release bus
+This is counter: 5
+D (20502) spi_master: device0 locked the bus
+D (20502) spi_master: device0 release bus
+D (20502) spi_master: device0 locked the bus
+D (20502) spi_master: device0 release bus
+D (20502) spi_master: device0 locked the bus
+D (20512) spi_master: device0 release bus
+This is counter: 6
+D (23012) spi_master: device0 locked the bus
+D (23012) spi_master: device0 release bus
+D (23012) spi_master: device0 locked the bus
+D (23012) spi_master: device0 release bus
+D (23012) spi_master: device0 locked the bus
+D (23022) spi_master: device0 release bus
+This is counter: 7
+D (25522) spi_master: device0 locked the bus
+D (25522) spi_master: device0 release bus
+D (25522) spi_master: device0 locked the bus
+D (25522) spi_master: device0 release bus
+D (25522) spi_master: device0 locked the bus
+D (25532) spi_master: device0 release bus
+This is counter: 8
+D (28032) spi_master: device0 locked the bus
+D (28032) spi_master: device0 release bus
+D (28032) spi_master: device0 locked the bus
+D (28032) spi_master: device0 release bus
+D (28032) spi_master: device0 locked the bus
+D (28042) spi_master: device0 release bus
+This is counter: 9
+D (30542) spi_master: device0 locked the bus
+D (30542) spi_master: device0 release bus
+D (30542) spi_master: device0 locked the bus
+D (30542) spi_master: device0 release bus
+D (30542) spi_master: device0 locked the bus
+D (30552) spi_master: device0 release bus
+This is counter: 10
+D (33052) spi_master: device0 locked the bus
+D (33052) spi_master: device0 release bus
+D (33052) spi_master: device0 locked the bus
+D (33052) spi_master: device0 release bus
+D (33052) spi_master: device0 locked the bus
+D (33062) spi_master: device0 release bus
+This is counter: 11
+D (35562) spi_master: device0 locked the bus
+D (35562) spi_master: device0 release bus
+D (35562) spi_master: device0 locked the bus
+D (35562) spi_master: device0 release bus
+D (35562) spi_master: device0 locked the bus
+D (35572) spi_master: device0 release bus
+This is counter: 12
+D (38072) spi_master: device0 locked the bus
+D (38072) spi_master: device0 release bus
+D (38072) spi_master: device0 locked the bus
+D (38072) spi_master: device0 release bus
+D (38072) spi_master: device0 locked the bus
+D (38082) spi_master: device0 release bus
+This is counter: 13
+D (40582) spi_master: device0 locked the bus
+D (40582) spi_master: device0 release bus
+D (40582) spi_master: device0 locked the bus
+D (40582) spi_master: device0 release bus
+D (40582) spi_master: device0 locked the bus
+D (40592) spi_master: device0 release bus
+This is counter: 14
+D (43092) spi_master: device0 locked the bus
+D (43092) spi_master: device0 release bus
+D (43092) spi_master: device0 locked the bus
+D (43092) spi_master: device0 release bus
+D (43092) spi_master: device0 locked the bus
+D (43102) spi_master: device0 release bus
+This is counter: 15
+D (45602) spi_master: device0 locked the bus
+D (45602) spi_master: device0 release bus
+D (45602) spi_master: device0 locked the bus
+D (45602) spi_master: device0 release bus
+D (45602) spi_master: device0 locked the bus
+D (45612) spi_master: device0 release bus
+This is counter: 16
+D (48112) spi_master: device0 locked the bus
+D (48112) spi_master: device0 release bus
+D (48112) spi_master: device0 locked the bus
+D (48112) spi_master: device0 release bus
+D (48112) spi_master: device0 locked the bus
+D (48122) spi_master: device0 release bus
+This is counter: 17
+D (50622) spi_master: device0 locked the bus
+D (50622) spi_master: device0 release bus
+D (50622) spi_master: device0 locked the bus
+D (50622) spi_master: device0 release bus
+D (50622) spi_master: device0 locked the bus
+D (50632) spi_master: device0 release bus
+This is counter: 18
+D (53132) spi_master: device0 locked the bus
+D (53132) spi_master: device0 release bus
+D (53132) spi_master: device0 locked the bus
+D (53132) spi_master: device0 release bus
+D (53132) spi_master: device0 locked the bus
+D (53142) spi_master: device0 release bus
+This is counter: 19
+D (55642) spi_master: device0 locked the bus
+D (55642) spi_master: device0 release bus
+D (55642) spi_master: device0 locked the bus
+D (55642) spi_master: device0 release bus
+D (55642) spi_master: device0 locked the bus
+D (55652) spi_master: device0 release bus
+This is counter: 20
+D (58152) spi_master: device0 locked the bus
+D (58152) spi_master: device0 release bus
+D (58152) spi_master: device0 locked the bus
+D (58152) spi_master: device0 release bus
+D (58152) spi_master: device0 locked the bus
+D (58162) spi_master: device0 release bus
+This is counter: 21
+
+PS D:\Projects\ESP\projects\ESP32-C6-OLED\esp32-c6_LVGL> 
+PS D:\Projects\ESP\projects\ESP32-C6-OLED\esp32-c6_LVGL>
+PS D:\Projects\ESP\projects\ESP32-C6-OLED\esp32-c6_LVGL> $env:IDF_PATH = 'd:\Projects\ESP\Espressif\v5.4.1\esp-idf';
+PS D:\Projects\ESP\projects\ESP32-C6-OLED\esp32-c6_LVGL>  & 'd:\Projects\ESP\Espressif\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe' 'd:\Projects\ESP\Espressif\v5.4.1\esp-idf\tools\idf_monitor.py' -p COM7 -b 115200 --toolchain-prefix riscv32-esp-elf- --make '''d:\Projects\ESP\Espressif\.espressif\python_env\idf5.4_py3.11_env\Scripts\python.exe'' ''d:\Projects\ESP\Espressif\v5.4.1\esp-idf\tools\idf.py''' --target esp32c6 'd:\Projects\ESP\projects\ESP32-C6-OLED\esp32-c6_LVGL\build\esp32-c6_LVGL.elf'
+--- Warning: GDB cannot open serial ports accessed as COMx
+--- Using \\.\COM7 instead...
+--- esp-idf-monitor 1.6.0 on \\.\COM7 115200
+--- Quit: Ctrl+] | Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H
+I (107) esp_image: segment 2: paddr=0002ece8 vaddr=4080dbd0 sizeESP-ROM:esp32c6-20220919
+Build:Sep 19 2022
+rst:0x15 (USB_UART_HPSYS),boot:0x6e (SPI_FAST_FLASH_BOOT)
+Saved PC:0x40805530
+--- 0x40805530: rv_utils_wait_for_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/riscv/include/riscv/rv_utils.h:62
+---  (inlined by) esp_cpu_wait_for_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/cpu.c:62
+
+SPIWP:0xee
+mode:DIO, clock div:2
+load:0x40875720,len:0x16b8
+load:0x4086c110,len:0xe84
+load:0x4086e610,len:0x3054
+entry 0x4086c11a
+I (23) boot: ESP-IDF v5.4.1 2nd stage bootloader
+I (23) boot: compile time Apr 10 2025 10:48:19
+I (24) boot: chip revision: v0.1
+I (24) boot: efuse block revision: v0.3
+I (26) boot.esp32c6: SPI Speed      : 80MHz
+I (30) boot.esp32c6: SPI Mode       : DIO
+I (34) boot.esp32c6: SPI Flash Size : 4MB
+I (38) boot: Enabling RNG early entropy source...
+I (42) boot: Partition Table:
+I (45) boot: ## Label            Usage          Type ST Offset   Length
+I (51) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (58) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (64) boot:  2 factory          factory app      00 00 00010000 00200000
+I (71) boot: End of partition table
+I (74) esp_image: segment 0: paddr=00010020 vaddr=42050020 size=110f4h ( 69876) map
+I (95) esp_image: segment 1: paddr=0002111c vaddr=40800000 size=0dbc4h ( 56260) load
+I (107) esp_image: segment 2: paddr=0002ece8 vaddr=4080dbd0 size=01330h (  4912) load
+I (109) esp_image: segment 3: paddr=00030020 vaddr=42000020 size=4fc9ch (326812) map
+I (171) esp_image: segment 4: paddr=0007fcc4 vaddr=4080ef00 size=00608h (  1544) load
+I (173) esp_image: segment 5: paddr=000802d4 vaddr=50000000 size=0001ch (    28) load
+I (179) boot: Loaded app from partition at offset 0x10000
+I (180) boot: Disabling RNG early entropy source...
+I (197) cpu_start: Unicore app
+D (197) cpu_start: Pro cpu up
+D (205) clk: RTC_SLOW_CLK calibration value: 3563776
+D (210) cpu_start: calling init function: 0x42000236 on core: 0
+--- 0x42000236: __esp_system_init_fn_init_efuse_check at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/efuse/src/esp_efuse_startup.c:37
+
+D (211) cpu_start: calling init function: 0x42000400 on core: 0
+--- 0x42000400: __esp_system_init_fn_init_show_cpu_freq at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:58
+
+I (211) cpu_start: Pro cpu start user code
+I (214) cpu_start: cpu freq: 160000000 Hz
+D (218) cpu_start: calling init function: 0x420000e0 on core: 0
+--- 0x420000e0: __esp_system_init_fn_init_show_app_info at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_app_format/esp_app_desc.c:123
+
+I (224) app_init: Application information:
+I (227) app_init: Project name:     esp32-c6_LVGL
+I (232) app_init: App version:      f34caae-dirty
+I (236) app_init: Compile time:     Apr 10 2025 10:48:36
+I (241) app_init: ELF file SHA256:  67bb49025...
+I (246) app_init: ESP-IDF:          v5.4.1
+D (249) cpu_start: calling init function: 0x42000248 on core: 0
+--- 0x42000248: __esp_system_init_fn_init_efuse_show_app_info at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/efuse/src/esp_efuse_startup.c:47
+
+I (255) efuse_init: Min chip rev:     v0.0
+I (259) efuse_init: Max chip rev:     v0.99
+I (263) efuse_init: Chip rev:         v0.1
+D (267) cpu_start: calling init function: 0x42002c40 on core: 0
+--- 0x42002c40: __esp_system_init_fn_init_heap at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/heap/heap_caps_init.c:25
+
+D (272) memory_layout: Checking 5 reserved memory ranges:
+D (277) memory_layout: Reserved memory range 0x40800000 - 0x4080dbd0
+--- 0x40800000: _vector_table at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/riscv/vectors_intc.S:54
+
+D (284) memory_layout: Reserved memory range 0x4080dbd0 - 0x408206d0
+D (290) memory_layout: Reserved memory range 0x4087f564 - 0x40880000
+D (296) memory_layout: Reserved memory range 0x50000000 - 0x5000001c
+D (302) memory_layout: Reserved memory range 0x50003fe8 - 0x50004000
+D (308) memory_layout: Building list of available memory regions:
+D (314) memory_layout: Available memory region 0x408206d0 - 0x40840000
+D (320) memory_layout: Available memory region 0x40840000 - 0x40860000
+D (326) memory_layout: Available memory region 0x40860000 - 0x4087c610
+D (332) memory_layout: Available memory region 0x4087c610 - 0x4087f564
+D (339) memory_layout: Available memory region 0x5000001c - 0x50003fe8
+I (345) heap_init: Initializing. RAM available for dynamic allocation:
+D (351) heap_init: New heap initialised at 0x408206d0
+I (356) heap_init: At 408206D0 len 0005BF40 (367 KiB): RAM
+I (361) heap_init: At 4087C610 len 00002F54 (11 KiB): RAM
+D (366) heap_init: New heap initialised at 0x5000001c
+I (371) heap_init: At 5000001C len 00003FCC (15 KiB): RTCRAM
+D (376) cpu_start: calling init function: 0x420081ca on core: 0
+--- 0x420081ca: __esp_system_init_fn_esp_timer_init_nonos at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_timer/src/esp_timer_init.c:28
+
+D (382) cpu_start: calling init function: 0x42007c80 on core: 0
+--- 0x42007c80: __esp_system_init_fn_init_newlib at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/newlib/newlib_init.c:157
+
+D (388) cpu_start: calling init function: 0x42000478 on core: 0
+--- 0x42000478: __esp_system_init_fn_init_brownout at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:67
+
+D (394) intr_alloc: Connected src 15 to int 2 (cpu 0)
+D (398) cpu_start: calling init function: 0x42000486 on core: 0
+--- 0x42000486: __esp_system_init_fn_init_newlib_time at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:81
+
+D (404) cpu_start: calling init function: 0x42009724 on core: 0
+--- 0x42009724: __esp_system_init_fn_init_vfs_uart at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_uart/src/uart_vfs.c:1146
+
+D (410) cpu_start: calling init function: 0x4200abb8 on core: 0
+--- 0x4200abb8: __esp_system_init_fn_init_vfs_usj_sec at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag_vfs.c:628
+
+D (415) cpu_start: calling init function: 0x4200c0ce on core: 0
+--- 0x4200c0ce: __esp_system_init_fn_init_vfs_nullfs at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/vfs/nullfs.c:322
+
+D (421) cpu_start: calling init function: 0x4200ae6a on core: 0
+--- 0x4200ae6a: __esp_system_init_fn_init_vfs_console at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_vfs_console/vfs_console.c:247
+
+D (427) cpu_start: calling init function: 0x42007cfc on core: 0
+--- 0x42007cfc: __esp_system_init_fn_init_newlib_stdio at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/newlib/newlib_init.c:202
+
+D (432) cpu_start: calling init function: 0x42000496 on core: 0
+--- 0x42000496: __esp_system_init_fn_init_flash at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:88
+
+D (438) spi_flash: trying chip: generic
+I (441) spi_flash: detected chip: generic
+I (445) spi_flash: flash io: dio
+D (448) cpu_start: calling init function: 0x4200032e on core: 0
+--- 0x4200032e: __esp_system_init_fn_init_efuse at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/efuse/src/esp_efuse_startup.c:145
+
+D (454) cpu_start: calling init function: 0x4204d446
+--- 0x4204d446: _GLOBAL__sub_I__ZN17__eh_globals_init7_S_initE at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/build/build-cc-gcc-final/riscv32-esp-elf/rv32imac_zicsr_zifencei/ilp32/no-rtti/libstdc++-v3/include/riscv32-esp-elf/bits/gthr-default.h:721
+---  (inlined by) __eh_globals_init::__eh_globals_init() at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/src/gcc/libstdc++-v3/libsupc++/eh_globals.cc:105
+---  (inlined by) __static_initialization_and_destruction_0 at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/src/gcc/libstdc++-v3/libsupc++/eh_globals.cc:126
+---  (inlined by) _GLOBAL__sub_I__ZN17__eh_globals_init7_S_initE at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/src/gcc/libstdc++-v3/libsupc++/eh_globals.cc:162
+
+D (458) cpu_start: calling init function: 0x42048a54
+--- 0x42048a54: _GLOBAL__sub_I__ZN3nvs4PageC2Ev at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/nvs_flash/src/nvs_page.cpp:1158
+
+D (463) cpu_start: calling init function: 0x408067aa
+--- 0x408067aa: enable_timer_group0_for_calibration at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/port/esp32c6/rtc_time.c:277
+
+D (468) cpu_start: calling init function: 0x40806e6c
+--- 0x40806e6c: tlsf_set_rom_patches at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_rom/patches/esp_rom_tlsf.c:172
+
+D (472) cpu_start: calling init function: 0x42001344
+--- 0x42001344: esp_reset_reason_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/port/soc/esp32c6/reset_reason.c:72
+
+D (477) cpu_start: calling init function: 0x4204897a on core: 0
+--- 0x4204897a: __esp_system_init_fn_esp_timer_init_os at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_timer/src/esp_timer.c:566
+
+D (483) intr_alloc: Connected src 59 to int 5 (cpu 0)
+D (487) cpu_start: calling init function: 0x42001f60 on core: 0
+--- 0x42001f60: __esp_system_init_fn_esp_hw_stack_guard_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/hw_stack_guard.c:15
+
+D (493) cpu_start: calling init function: 0x420480c8 on core: 0
+--- 0x420480c8: _lp_clkrst_ll_enable_rng_clock at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/esp32c6/include/hal/lp_clkrst_ll.h:24
+---  (inlined by) __esp_system_init_fn_init_rng_clock at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/hw_random.c:106
+
+D (499) cpu_start: calling init function: 0x42003006 on core: 0
+--- 0x42003006: __esp_system_init_fn_esp_security_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_security/src/init.c:38
+
+D (505) cpu_start: calling init function: 0x42003ca2 on core: 0
+--- 0x42003ca2: __esp_system_init_fn_esp_sleep_startup_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/sleep_gpio.c:194
+
+I (510) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (516) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+D (523) cpu_start: calling init function: 0x420054ae on core: 0
+--- 0x420054ae: __esp_system_init_fn_sleep_clock_startup_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/lowpower/port/esp32c6/sleep_clock.c:107
+
+D (529) cpu_start: calling init function: 0x420004d8 on core: 0
+--- 0x420004d8: __esp_system_init_fn_init_coexist at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:134
+
+I (534) coexist: coex firmware version: e727207
+I (538) coexist: coexist rom version 5b8dcfa
+D (542) cpu_start: calling init function: 0x4200a3ca on core: 0
+--- 0x4200a3ca: __esp_system_init_fn_usb_serial_jtag_conn_status_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag_connection_monitor.c:75
+
+D (548) cpu_start: calling init function: 0x420004f0 on core: 0
+--- 0x420004f0: __esp_system_init_fn_init_disable_rtc_wdt at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:143
+
+D (554) intr_alloc: Connected src 22 to int 8 (cpu 0)
+D (558) app_start: Starting scheduler on CPU0
+D (562) intr_alloc: Connected src 57 to int 9 (cpu 0)
+I (562) main_task: Started on CPU0
+D (562) heap_init: New heap initialised at 0x4087c610
+D (562) intr_alloc: Connected src 53 to int 10 (cpu 0)
+I (572) main_task: Calling app_main()
+I (2572) playground: Turn on LCD backlight first, to see display content early!
+I (2572) playground: Turn off LCD backlight
+I (2572) gpio: GPIO[22]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
+D (2572) ledc: Using clock source 4 (in slow mode), divisor: 0x1f4
+D (2582) ledc: In slow speed mode, global clk set: 4
+D (2582) ledc: LEDC_PWM CHANNEL 0|GPIO 22|Duty 0000|Time 0
+D (2592) intr_alloc: Connected src 45 to int 11 (cpu 0)
+I (2592) playground: Set LCD backlight
+D (2602) playground: Initialize SPI bus
+D (2602) gdma: new group (0) at 0x40826344
+D (2612) gdma: new pair (0,0) at 0x408263c4
+D (2612) gdma: new tx channel (0,0) at 0x4082630c
+D (2612) gdma: new rx channel (0,0) at 0x408263e4
+D (2622) spi: SPI2 use gpio matrix.
+D (2622) intr_alloc: Connected src 72 to int 12 (cpu 0)
+D (2632) spi_hal: eff: 11428, limit: 80000k(/0), 0 dummy, -1 delay
+D (2632) spi_master: SPI2: New device added to CS0, effective clock: 11428571 Hz
+I (2642) gpio: GPIO[15]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
+D (2652) lcd_panel.io.spi: new spi lcd panel io @0x408266f4, max_trans_bytes: 32768
+I (2652) playground: Install ST7789T panel driver
+I (2662) gpio: GPIO[21]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0 
+D (2672) lcd_panel.st7789: new st7789 panel @0x40826d14
+D (2692) spi_master: device0 locked the bus
+D (2692) spi_master: device0 release bus
+D (2792) spi_master: device0 locked the bus
+D (2792) spi_master: device0 release bus
+D (2792) spi_master: device0 locked the bus
+D (2792) spi_master: device0 release bus
+D (2792) spi_master: device0 locked the bus
+D (2792) spi_master: device0 release bus
+D (2802) spi_master: device0 locked the bus
+D (2802) spi_master: device0 release bus
+D (2812) spi_master: device0 locked the bus
+D (2812) spi_master: device0 release bus
+D (2912) spi_master: device0 locked the bus
+D (2912) spi_master: device0 release bus
+D (2912) spi_master: device0 locked the bus
+D (2912) spi_master: device0 release bus
+D (2912) spi_master: device0 locked the bus
+D (2912) spi_master: device0 release bus
+W (2922) playground: Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.
 Guru Meditation Error: Core  0 panic'ed (Load access fault). Exception was unhandled.
 
 Core  0 register dump:
-MEPC    : 0x4200e24c  RA      : 0x4200f334  SP      : 0x40825df0  GP      : 0x4080e284
---- 0x4200e24c: _lv_obj_get_ext_draw_size at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/components/lvgl/src/core/lv_obj_draw.c:311
---- 0x4200f334: lv_area_copy at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/components/lvgl/src/misc/lv_area.h:123
----  (inlined by) lv_obj_invalidate at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/components/lvgl/src/core/lv_obj_pos.c:833
+MEPC    : 0x4200e64a  RA      : 0x4200f732  SP      : 0x40825fa0  GP      : 0x4080e3d4
+--- 0x4200e64a: lv_obj_get_ext_draw_size at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/components/lvgl/src/core/lv_obj_draw.c:313
+--- 0x4200f732: lv_area_copy at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/components/lvgl/src/misc/lv_area.h:109
+---  (inlined by) lv_obj_invalidate at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/components/lvgl/src/core/lv_obj_pos.c:848
 
-TP      : 0x40825e90  T0      : 0x400208f0  T1      : 0x0000000f  T2      : 0x00000000
---- 0x400208f0: systimer_hal_set_alarm_target in ROM
+TP      : 0x40826040  T0      : 0x40028192  T1      : 0x20000000  T2      : 0x00000000
+--- 0x40028192: __retarget_lock_release_recursive in ROM
 
-S0/FP   : 0x00000000  S1      : 0x42053080  A0      : 0x00000000  A1      : 0x42053080
-A2      : 0x00000001  A3      : 0x00000004  A4      : 0x00000001  A5      : 0x40820000
-A6      : 0xfff00000  A7      : 0x00000002  S2      : 0x00000000  S3      : 0x00000000
+S0/FP   : 0x00000000  S1      : 0x42053488  A0      : 0x00000000  A1      : 0x42053488
+A2      : 0x00000000  A3      : 0x00000004  A4      : 0x00000001  A5      : 0x40820000
+A6      : 0x00000001  A7      : 0x0000000a  S2      : 0x00000000  S3      : 0x00000000
 S4      : 0x00000000  S5      : 0x00000000  S6      : 0x00000000  S7      : 0x00000000
 S8      : 0x00000000  S9      : 0x00000000  S10     : 0x00000000  S11     : 0x00000000
-T3      : 0xff000fff  T4      : 0x00000010  T5      : 0x00000000  T6      : 0x00000000
+T3      : 0x00000000  T4      : 0x00000010  T5      : 0x00000000  T6      : 0x00000000
 MSTATUS : 0x00001881  MTVEC   : 0x40800001  MCAUSE  : 0x00000005  MTVAL   : 0x00000008
 --- 0x40800001: _vector_table at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/riscv/vectors_intc.S:54
 
 MHARTID : 0x00000000
 
 Stack memory:
-40825df0: 0xff000fff 0x00000010 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x4202d0b6
---- 0x4202d0b6: lv_label_set_text at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/components/lvgl/src/widgets/label/lv_label.c:101
+40825fa0: 0x00000000 0x00000010 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x4202e510
+--- 0x4202e510: lv_label_set_text at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/components/lvgl/src/widgets/label/lv_label.c:143
 
-40825e10: 0x00000000 0x00000000 0x00000000 0x4200c4dc 0x00000000 0x00000000 0x00000000 0x00000000
---- 0x4200c4dc: lvgl_task at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/main.c:326
+40825fc0: 0x00000000 0x00000000 0x42053000 0x4200c888 0x00000000 0x00000000 0x00000000 0x00000000
+--- 0x4200c888: lvgl_task at D:/Projects/ESP/projects/ESP32-C6-OLED/esp32-c6_LVGL/main/main.c:325 (discriminator 6)
 
-40825e30: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-40825e50: 0x00000000 0x00000000 0x00000000 0x40808046 0x00000000 0x00000000 0x00000000 0x00000000
---- 0x40808046: vPortTaskWrapper at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/riscv/port.c:258
+40825fe0: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40826000: 0x00000000 0x00000000 0x00000000 0x40808132 0x00000000 0x00000000 0x00000000 0x00000000
+--- 0x40808132: vPortTaskWrapper at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/freertos/FreeRTOS-Kernel/portable/riscv/port.c:258
 
-40825e70: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
-40825e90: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x00000150 0x40825d80 0x000006bd 0x4080f608 0x4080f608
-40825eb0: 0x40825ea0 0x4080f600 0x00000015 0x00000000 0x00000000 0x40825ea0 0x00000000 0x00000004
-40825ed0: 0x40823e9c 0x4c47564c 0x73617420 0x0000006b 0x00000000 0x40825e90 0x00000004 0x00000000
-40825ef0: 0x00000000 0x00000000 0x00000000 0x40820e70 0x40820ed8 0x40820f40 0x00000000 0x00000000
-40825f10: 0x00000001 0x00000000 0x00000000 0x00000000 0x42007858 0x00000000 0x00000000 0x00000000
---- 0x42007858: esp_cleanup_r at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/newlib/newlib_init.c:43
+40826020: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5
+40826040: 0xa5a5a5a5 0xa5a5a5a5 0xa5a5a5a5 0x00000150 0x40825f30 0x000006c8 0x4080f778 0x4080f778
+40826060: 0x40826050 0x4080f770 0x00000015 0x00000000 0x00000000 0x40826050 0x00000000 0x00000004
+40826080: 0x4082404c 0x4c47564c 0x73617420 0x0000006b 0x00000000 0x40826040 0x00000004 0x00000000
+408260a0: 0x00000000 0x00000000 0x00000000 0x40821020 0x40821088 0x408210f0 0x00000000 0x00000000
+408260c0: 0x00000001 0x00000000 0x00000000 0x00000000 0x4002849c 0x00000000 0x00000000 0x00000000
+--- 0x4002849c: _cleanup_r in ROM
 
-40825f30: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-40825f50: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-40825f70: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-40825f90: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-40825fb0: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-40825fd0: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-40825ff0: 0x00000010 0x00000000 0x64636c05 0x6e61705f 0x40006c65 0x00000018 0x40825ff4 0x64636c05
+408260e0: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40826100: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40826120: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40826140: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40826160: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+40826180: 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+408261a0: 0x00000010 0x00000000 0x64636c05 0x6e61705f 0x40006c65 0x00000018 0x408261a4 0x64636c05
 --- 0x40006c65: set_rx_gain_cal_iq in ROM
 
-40826010: 0x6e61705f 0x732e6c65 0x38373774 0x40820039 0x00000010 0x40826008 0x616c7005 0x6f726779
-40826030: 0x00646e75 0x00000054 0x00000000 0x40826038 0x00000000 0x00000000 0x00000000 0x40826050
-40826050: 0xffffffff 0x40826050 0x40826050 0x00000000 0x40826064 0xffffffff 0x40826064 0x40826064
-40826070: 0x00000001 0x00000001 0x00000000 0x0000ffff 0x00000000 0x00000000 0x40826030 0x00000024
-40826090: 0x60007000 0x00000000 0x00000004 0x00000000 0x00000001 0x00000000 0x00000000 0x00000000
-408260b0: 0x00000000 0x0000000c 0x408260c8 0x00000000 0x408260b0 0x0000000c 0x0b56010a 0x00000000
-408260d0: 0x408265f4 0x00000068 0x00000001 0x00000000 0x42042b40 0x40826528 0x00000006 0xffffffff
---- 0x42042b40: spi_master_deinit_driver at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_master.c:341
+408261c0: 0x6e61705f 0x732e6c65 0x38373774 0x40820039 0x00000010 0x408261b8 0x616c7005 0x6f726779
+408261e0: 0x00646e75 0x00000054 0x00000000 0x408261e8 0x00000000 0x00000000 0x00000000 0x40826200
+40826200: 0xffffffff 0x40826200 0x40826200 0x00000000 0x40826214 0xffffffff 0x40826214 0x40826214
+40826220: 0x00000001 0x00000001 0x00000000 0x0000ffff 0x00000000 0x40826214 0x408261e0 0x00000024
+40826240: 0x60007000 0x00000000 0x00000004 0x00000000 0x00000001 0x00000000 0x00000000 0x00000000
+40826260: 0x00000000 0x0000000c 0x40826278 0x00000000 0x40826260 0x0000000c 0x0b56010a 0x00000000
+40826280: 0x408269e4 0x00000068 0x00000001 0x00000000 0x42049d18 0x40826918 0x00000006 0xffffffff
+--- 0x42049d18: spi_master_deinit_driver at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_spi/src/gpspi/spi_master.c:341
 
-408260f0: 0x00000007 0xffffffff 0xffffffff 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-40826110: 0x00002b00 0x00000000 0x00000000 0x00000000 0x0000006c 0x00002ff4 0x00000001 0x00000004
-40826130: 0x408262c0 0x40826144 0x00000000 0x00000000 0x00000014 0x4082615c 0x40826234 0x00000003
-40826150: 0x40826270 0x40826298 0x00000034 0x40826214 0x00000000 0xb33fffff 0x00000000 0x00000000
-40826170: 0x00000000 0x00000001 0x80000000 0x4204775a 0x00000000 0x00000000 0x00000000 0x00000000
---- 0x4204775a: gdma_del_tx_channel at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/dma/gdma.c:728
+408262a0: 0x00000007 0xffffffff 0xffffffff 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+408262c0: 0x0001ae00 0x00000000 0x00000000 0x00000000 0x0000006c 0x0001af94 0x00000001 0x00000004
+408262e0: 0x408266b0 0x408262f4 0x00000000 0x00000000 0x00000014 0x4082630c 0x408263e4 0x0000001b
+40826300: 0x40826420 0x40826568 0x00000034 0x408263c4 0x00000000 0xb33fffff 0x00000000 0x00000000
+40826320: 0x00000000 0x00000001 0x80000000 0x4204ebe8 0x00000000 0x00000000 0x00000000 0x00000000
+--- 0x4204ebe8: gdma_del_tx_channel at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/dma/gdma.c:728
 
-40826190: 0x0000007c 0x00000000 0x00000000 0x60080000 0x4080db04 0x4080a354 0x4080a3de 0x4080a23c
---- 0x4080a354: gdma_ahb_hal_start_with_desc at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:18
---- 0x4080a3de: gdma_ahb_hal_stop at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:29
---- 0x4080a23c: gdma_ahb_hal_append at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:38
+40826340: 0x0000007c 0x00000000 0x00000000 0x60080000 0x4080dc3c 0x4080a440 0x4080a4ca 0x4080a328
+--- 0x4080a440: gdma_ahb_hal_start_with_desc at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:18
+--- 0x4080a4ca: gdma_ahb_hal_stop at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:29
+--- 0x4080a328: gdma_ahb_hal_append at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:38
 
-408261b0: 0x4080a306 0x42048262 0x420482a0 0x4204833a 0x4204837e 0x00000000 0x420483f6 0x420484c4
---- 0x4080a306: gdma_ahb_hal_reset at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:47
---- 0x42048262: gdma_ahb_hal_set_priority at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:56
---- 0x420482a0: gdma_ahb_hal_connect_peri at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:65
---- 0x4204833a: gdma_ahb_hal_disconnect_peri at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:76
---- 0x4204837e: gdma_ahb_hal_enable_burst at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:85
---- 0x420483f6: gdma_ahb_hal_set_strategy at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:107
---- 0x420484c4: gdma_ahb_hal_get_intr_status_reg at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:147
+40826360: 0x4080a3f2 0x4204f7e0 0x4204f81e 0x4204f8b8 0x4204f8fc 0x00000000 0x4204f974 0x4204fa42
+--- 0x4080a3f2: gdma_ahb_hal_reset at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:47
+--- 0x4204f7e0: gdma_ahb_hal_set_priority at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:56
+--- 0x4204f81e: gdma_ahb_hal_connect_peri at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:65
+--- 0x4204f8b8: gdma_ahb_hal_disconnect_peri at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:76
+--- 0x4204f8fc: gdma_ahb_hal_enable_burst at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:85
+--- 0x4204f974: gdma_ahb_hal_set_strategy at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:107
+--- 0x4204fa42: gdma_ahb_hal_get_intr_status_reg at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:147
 
-408261d0: 0x4204847a 0x4080a27a 0x4080a2d4 0x4080a296 0x00000000 0x420484e0 0xb33fffff 0x00000000
---- 0x4204847a: gdma_ahb_hal_enable_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:120
---- 0x4080a27a: gdma_ahb_hal_clear_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:129
---- 0x4080a2d4: gdma_ahb_hal_read_intr_status at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:138
---- 0x4080a296: gdma_ahb_hal_get_eof_desc_addr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:156
---- 0x420484e0: gdma_ahb_hal_enable_etm_task at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:170
-
-
+40826380: 0x4204f9f8 0x4080a366 0x4080a3c0 0x4080a382 0x00000000 0x4204fa5e 0xb33fffff 0x00000000
+--- 0x4204f9f8: gdma_ahb_hal_enable_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:120
+--- 0x4080a366: gdma_ahb_hal_clear_intr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:129
+--- 0x4080a3c0: gdma_ahb_hal_read_intr_status at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:138
+--- 0x4080a382: gdma_ahb_hal_get_eof_desc_addr at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:156
+--- 0x4204fa5e: gdma_ahb_hal_enable_etm_task at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/gdma_hal_ahb_v1.c:170
 
 
-ELF file SHA256: 74003468b
+
+
+ELF file SHA256: 67bb49025
 
 Rebooting...
 ESP-ROM:esp32c6-20220919
@@ -173,5 +709,212 @@ SPIWP:0xee
 mode:DIO, clock div:2
 load:0x40875720,len:0x16b8
 load:0x4086c110,len:0xe84
-load:0x4086e610,len:0x3058
+load:0x4086e610,len:0x3054
 entry 0x4086c11a
+I (22) boot: ESP-IDF v5.4.1 2nd stage bootloader
+I (22) boot: compile time Apr 10 2025 10:48:19
+I (23) boot: chip revision: v0.1
+I (24) boot: efuse block revision: v0.3
+I (25) boot.esp32c6: SPI Speed      : 80MHz
+I (29) boot.esp32c6: SPI Mode       : DIO
+I (33) boot.esp32c6: SPI Flash Size : 4MB
+I (37) boot: Enabling RNG early entropy source...
+I (41) boot: Partition Table:
+I (44) boot: ## Label            Usage          Type ST Offset   Length
+I (50) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (57) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (63) boot:  2 factory          factory app      00 00 00010000 00200000
+I (70) boot: End of partition table
+I (73) esp_image: segment 0: paddr=00010020 vaddr=42050020 size=110f4h ( 69876) map
+I (106) esp_image: segment 1: paddr=0002111c vaddr=40800000 size=0dbc4h ( 56260) load
+I (131) esp_image: segment 2: paddr=0002ece8 vaddr=4080dbd0 size=01330h (  4912) load
+I (135) esp_image: segment 3: paddr=00030020 vaddr=42000020 size=4fc9ch (326812) map
+I (256) esp_image: segment 4: paddr=0007fcc4 vaddr=4080ef00 size=00608h (  1544) load
+I (258) esp_image: segment 5: paddr=000802d4 vaddr=50000000 size=0001ch (    28) load
+I (266) boot: Loaded app from partition at offset 0x10000
+I (267) boot: Disabling RNG early entropy source...
+I (282) cpu_start: Unicore app
+D (283) cpu_start: Pro cpu up
+D (291) clk: RTC_SLOW_CLK calibration value: 3562982
+D (296) cpu_start: calling init function: 0x42000236 on core: 0
+--- 0x42000236: __esp_system_init_fn_init_efuse_check at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/efuse/src/esp_efuse_startup.c:37
+
+D (296) cpu_start: calling init function: 0x42000400 on core: 0
+--- 0x42000400: __esp_system_init_fn_init_show_cpu_freq at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:58
+
+I (297) cpu_start: Pro cpu start user code
+I (300) cpu_start: cpu freq: 160000000 Hz
+D (303) cpu_start: calling init function: 0x420000e0 on core: 0
+--- 0x420000e0: __esp_system_init_fn_init_show_app_info at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_app_format/esp_app_desc.c:123
+
+I (309) app_init: Application information:
+I (313) app_init: Project name:     esp32-c6_LVGL
+I (317) app_init: App version:      f34caae-dirty
+I (322) app_init: Compile time:     Apr 10 2025 10:48:36
+I (327) app_init: ELF file SHA256:  67bb49025...
+I (331) app_init: ESP-IDF:          v5.4.1
+D (335) cpu_start: calling init function: 0x42000248 on core: 0
+--- 0x42000248: __esp_system_init_fn_init_efuse_show_app_info at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/efuse/src/esp_efuse_startup.c:47
+
+I (341) efuse_init: Min chip rev:     v0.0
+I (344) efuse_init: Max chip rev:     v0.99
+I (348) efuse_init: Chip rev:         v0.1
+D (352) cpu_start: calling init function: 0x42002c40 on core: 0
+--- 0x42002c40: __esp_system_init_fn_init_heap at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/heap/heap_caps_init.c:25
+
+D (358) memory_layout: Checking 5 reserved memory ranges:
+D (363) memory_layout: Reserved memory range 0x40800000 - 0x4080dbd0
+--- 0x40800000: _vector_table at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/riscv/vectors_intc.S:54
+
+D (369) memory_layout: Reserved memory range 0x4080dbd0 - 0x408206d0
+D (375) memory_layout: Reserved memory range 0x4087f564 - 0x40880000
+D (381) memory_layout: Reserved memory range 0x50000000 - 0x5000001c
+D (387) memory_layout: Reserved memory range 0x50003fe8 - 0x50004000
+D (393) memory_layout: Building list of available memory regions:
+D (399) memory_layout: Available memory region 0x408206d0 - 0x40840000
+D (405) memory_layout: Available memory region 0x40840000 - 0x40860000
+D (412) memory_layout: Available memory region 0x40860000 - 0x4087c610
+D (418) memory_layout: Available memory region 0x4087c610 - 0x4087f564
+D (424) memory_layout: Available memory region 0x5000001c - 0x50003fe8
+I (430) heap_init: Initializing. RAM available for dynamic allocation:
+D (437) heap_init: New heap initialised at 0x408206d0
+I (441) heap_init: At 408206D0 len 0005BF40 (367 KiB): RAM
+I (447) heap_init: At 4087C610 len 00002F54 (11 KiB): RAM
+D (452) heap_init: New heap initialised at 0x5000001c
+I (457) heap_init: At 5000001C len 00003FCC (15 KiB): RTCRAM
+D (462) cpu_start: calling init function: 0x420081ca on core: 0
+--- 0x420081ca: __esp_system_init_fn_esp_timer_init_nonos at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_timer/src/esp_timer_init.c:28
+
+D (468) cpu_start: calling init function: 0x42007c80 on core: 0
+--- 0x42007c80: __esp_system_init_fn_init_newlib at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/newlib/newlib_init.c:157
+
+D (474) cpu_start: calling init function: 0x42000478 on core: 0
+--- 0x42000478: __esp_system_init_fn_init_brownout at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:67
+
+D (479) intr_alloc: Connected src 15 to int 2 (cpu 0)
+D (484) cpu_start: calling init function: 0x42000486 on core: 0
+--- 0x42000486: __esp_system_init_fn_init_newlib_time at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:81
+
+D (490) cpu_start: calling init function: 0x42009724 on core: 0
+--- 0x42009724: __esp_system_init_fn_init_vfs_uart at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_uart/src/uart_vfs.c:1146
+
+D (495) cpu_start: calling init function: 0x4200abb8 on core: 0
+--- 0x4200abb8: __esp_system_init_fn_init_vfs_usj_sec at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag_vfs.c:628
+
+D (501) cpu_start: calling init function: 0x4200c0ce on core: 0
+--- 0x4200c0ce: __esp_system_init_fn_init_vfs_nullfs at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/vfs/nullfs.c:322
+
+D (506) cpu_start: calling init function: 0x4200ae6a on core: 0
+--- 0x4200ae6a: __esp_system_init_fn_init_vfs_console at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_vfs_console/vfs_console.c:247
+
+D (512) cpu_start: calling init function: 0x42007cfc on core: 0
+--- 0x42007cfc: __esp_system_init_fn_init_newlib_stdio at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/newlib/newlib_init.c:202
+
+D (518) cpu_start: calling init function: 0x42000496 on core: 0
+--- 0x42000496: __esp_system_init_fn_init_flash at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:88
+
+D (523) spi_flash: trying chip: generic
+I (527) spi_flash: detected chip: generic
+I (530) spi_flash: flash io: dio
+D (533) cpu_start: calling init function: 0x4200032e on core: 0
+--- 0x4200032e: __esp_system_init_fn_init_efuse at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/efuse/src/esp_efuse_startup.c:145
+
+D (539) cpu_start: calling init function: 0x4204d446
+--- 0x4204d446: _GLOBAL__sub_I__ZN17__eh_globals_init7_S_initE at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/build/build-cc-gcc-final/riscv32-esp-elf/rv32imac_zicsr_zifencei/ilp32/no-rtti/libstdc++-v3/include/riscv32-esp-elf/bits/gthr-default.h:721
+---  (inlined by) __eh_globals_init::__eh_globals_init() at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/src/gcc/libstdc++-v3/libsupc++/eh_globals.cc:105
+---  (inlined by) __static_initialization_and_destruction_0 at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/src/gcc/libstdc++-v3/libsupc++/eh_globals.cc:126
+---  (inlined by) _GLOBAL__sub_I__ZN17__eh_globals_init7_S_initE at /builds/idf/crosstool-NG/.build/riscv32-esp-elf/src/gcc/libstdc++-v3/libsupc++/eh_globals.cc:162
+
+D (544) cpu_start: calling init function: 0x42048a54
+--- 0x42048a54: _GLOBAL__sub_I__ZN3nvs4PageC2Ev at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/nvs_flash/src/nvs_page.cpp:1158
+
+D (549) cpu_start: calling init function: 0x408067aa
+--- 0x408067aa: enable_timer_group0_for_calibration at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/port/esp32c6/rtc_time.c:277
+
+D (553) cpu_start: calling init function: 0x40806e6c
+--- 0x40806e6c: tlsf_set_rom_patches at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_rom/patches/esp_rom_tlsf.c:172
+
+D (558) cpu_start: calling init function: 0x42001344
+--- 0x42001344: esp_reset_reason_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/port/soc/esp32c6/reset_reason.c:72
+
+D (563) cpu_start: calling init function: 0x4204897a on core: 0
+--- 0x4204897a: __esp_system_init_fn_esp_timer_init_os at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_timer/src/esp_timer.c:566
+
+D (569) intr_alloc: Connected src 59 to int 5 (cpu 0)
+D (573) cpu_start: calling init function: 0x42001f60 on core: 0
+--- 0x42001f60: __esp_system_init_fn_esp_hw_stack_guard_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/hw_stack_guard.c:15
+
+D (579) cpu_start: calling init function: 0x420480c8 on core: 0
+--- 0x420480c8: _lp_clkrst_ll_enable_rng_clock at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/hal/esp32c6/include/hal/lp_clkrst_ll.h:24
+---  (inlined by) __esp_system_init_fn_init_rng_clock at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/hw_random.c:106
+
+D (584) cpu_start: calling init function: 0x42003006 on core: 0
+--- 0x42003006: __esp_system_init_fn_esp_security_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_security/src/init.c:38
+
+D (590) cpu_start: calling init function: 0x42003ca2 on core: 0
+--- 0x42003ca2: __esp_system_init_fn_esp_sleep_startup_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/sleep_gpio.c:194
+
+I (596) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (602) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+D (608) cpu_start: calling init function: 0x420054ae on core: 0
+--- 0x420054ae: __esp_system_init_fn_sleep_clock_startup_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_hw_support/lowpower/port/esp32c6/sleep_clock.c:107
+
+D (614) cpu_start: calling init function: 0x420004d8 on core: 0
+--- 0x420004d8: __esp_system_init_fn_init_coexist at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:134
+
+I (620) coexist: coex firmware version: e727207
+I (624) coexist: coexist rom version 5b8dcfa
+D (628) cpu_start: calling init function: 0x4200a3ca on core: 0
+--- 0x4200a3ca: __esp_system_init_fn_usb_serial_jtag_conn_status_init at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_driver_usb_serial_jtag/src/usb_serial_jtag_connection_monitor.c:75
+
+D (633) cpu_start: calling init function: 0x420004f0 on core: 0
+--- 0x420004f0: __esp_system_init_fn_init_disable_rtc_wdt at D:/Projects/ESP/Espressif/v5.4.1/esp-idf/components/esp_system/startup_funcs.c:143
+
+D (639) intr_alloc: Connected src 22 to int 8 (cpu 0)
+D (644) app_start: Starting scheduler on CPU0
+D (648) intr_alloc: Connected src 57 to int 9 (cpu 0)
+I (648) main_task: Started on CPU0
+D (648) heap_init: New heap initialised at 0x4087c610
+D (648) intr_alloc: Connected src 53 to int 10 (cpu 0)
+I (658) main_task: Calling app_main()
+I (2658) playground: Turn on LCD backlight first, to see display content early!
+I (2658) playground: Turn off LCD backlight
+I (2658) gpio: GPIO[22]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
+D (2658) ledc: Using clock source 4 (in slow mode), divisor: 0x1f4
+D (2668) ledc: In slow speed mode, global clk set: 4
+D (2668) ledc: LEDC_PWM CHANNEL 0|GPIO 22|Duty 0000|Time 0
+D (2678) intr_alloc: Connected src 45 to int 11 (cpu 0)
+I (2678) playground: Set LCD backlight
+D (2688) playground: Initialize SPI bus
+D (2688) gdma: new group (0) at 0x40826344
+D (2698) gdma: new pair (0,0) at 0x408263c4
+D (2698) gdma: new tx channel (0,0) at 0x4082630c
+D (2698) gdma: new rx channel (0,0) at 0x408263e4
+D (2708) spi: SPI2 use gpio matrix.
+D (2708) intr_alloc: Connected src 72 to int 12 (cpu 0)
+D (2718) spi_hal: eff: 11428, limit: 80000k(/0), 0 dummy, -1 delay
+D (2718) spi_master: SPI2: New device added to CS0, effective clock: 11428571 Hz
+I (2728) gpio: GPIO[15]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
+D (2738) lcd_panel.io.spi: new spi lcd panel io @0x408266f4, max_trans_bytes: 32768
+I (2738) playground: Install ST7789T panel driver
+I (2748) gpio: GPIO[21]| InputEn: 0| OutputEn: 1| OpenDrain: 0| Pullup: 0| Pulldown: 0| Intr:0
+D (2758) lcd_panel.st7789: new st7789 panel @0x40826d14
+D (2778) spi_master: device0 locked the bus
+D (2778) spi_master: device0 release bus
+D (2878) spi_master: device0 locked the bus
+D (2878) spi_master: device0 release bus
+D (2878) spi_master: device0 locked the bus
+D (2878) spi_master: device0 release bus
+D (2878) spi_master: device0 locked the bus
+D (2878) spi_master: device0 release bus
+D (2888) spi_master: device0 locked the bus
+D (2888) spi_master: device0 release bus
+D (2898) spi_master: device0 locked the bus
+D (2898) spi_master: device0 release bus
+D (2998) spi_master: device0 locked the bus
+D (2998) spi_master: device0 release bus
+D (2998) spi_master: device0 locked the bus
+D (2998) spi_master: device0 release bus
+D (2998) spi_master: device0 locked the bus
+D (2998) spi_master: device0 release bus
+W (3008) playground: Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.

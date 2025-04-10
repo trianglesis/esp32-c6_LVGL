@@ -28,6 +28,7 @@ flash_test, data, fat,      ,        528K,
 Model: `ST7789` 
 - `LCD type 	TFT `
 - `172(H)RGB x320(V)`
+- `Drive IC ST7789V3`
 
 ```text
 LCD Pin 	ESP32C6
