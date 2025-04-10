@@ -1,27 +1,4 @@
-/*
-This file was compiled from multiple sources and help topics:
-
-Actual HW setup is loaded from the example of the board itself. But be aware, that the example is LVGL ver 8 only!
-https://www.waveshare.com/wiki/ESP32-C6-LCD-1.47
-
-How to actually setup display and all helper functions:
-https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/59
-
-Rotation: 
-https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/60
-
-Rotated display have a "dead zone" fix:
-https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/86?u=trianglesis
-
-NOTE: There is no touch support, so the code for this functionality is not here.
-
-Other docs to consider:
-https://docs.lvgl.io/master/API/display/lv_display.html#_CPPv422lv_display_set_defaultP12lv_display_t
-https://github.com/lvgl/lvgl/blob/release/v9.2/docs/porting/display.rst#id2
-*/
-
 #include "esp_log.h"
-
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/lock.h>
@@ -44,8 +21,29 @@ https://github.com/lvgl/lvgl/blob/release/v9.2/docs/porting/display.rst#id2
 // pictures
 #include "ui/ui.h"
 
-static const char *TAG = "playground";
+/*
+This file was compiled from multiple sources and help topics:
 
+Actual HW setup is loaded from the example of the board itself. But be aware, that the example is LVGL ver 8 only!
+https://www.waveshare.com/wiki/ESP32-C6-LCD-1.47
+
+How to actually setup display and all helper functions:
+https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/59
+
+Rotation: 
+https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/60
+
+Rotated display have a "dead zone" fix:
+https://forum.lvgl.io/t/gestures-are-slow-perceiving-only-detecting-one-of-5-10-tries/18515/86?u=trianglesis
+
+NOTE: There is no touch support, so the code for this functionality is not here.
+
+Other docs to consider:
+https://docs.lvgl.io/master/API/display/lv_display.html#_CPPv422lv_display_set_defaultP12lv_display_t
+https://github.com/lvgl/lvgl/blob/release/v9.2/docs/porting/display.rst#id2
+*/
+
+static const char *TAG = "playground";
 
 /* LCD size */
 #define DISP_HOR_RES   172
@@ -83,7 +81,7 @@ static const char *TAG = "playground";
 #define LEDC_ResolutionRatio   LEDC_TIMER_13_BIT
 #define LEDC_MAX_Duty          ((1 << LEDC_ResolutionRatio) - 1)
 
-#define BUFFER_SIZE            (DISP_VER_RES * DISP_HOR_RES * sizeof(uint16_t) / 10)
+#define BUFFER_SIZE            (DISP_VER_RES * DISP_HOR_RES * 2)
 
 static esp_lcd_panel_handle_t panel_handle = NULL;
 static esp_lcd_panel_io_handle_t io_handle = NULL;
@@ -321,20 +319,21 @@ static void lvgl_task(void *arg) {
         while (1);
     }
 
+    ESP_LOGW(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
+    vTaskDelay(pdMS_TO_TICKS(15000));
+    lv_label_set_text(ui_Label1, "START");
+    ESP_LOGW(TAG, "Called SquareLine LVGL UI objects once at init. Sleep 5 sec.");
+    vTaskDelay(pdMS_TO_TICKS(15000));
+
     // Create a simple label
     lv_obj_t *label = lv_label_create(lv_scr_act());
     lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
+    lv_label_set_long_mode(label, LV_LABEL_LONG_WRAP);     /*Break the long lines*/
+    lv_obj_set_width(label, DISP_HOR_RES - 2);  /*Set smaller width to make the lines wrap*/
     lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 
     long curtime = esp_timer_get_time()/1000;
     int counter = 0;
-
-    // ESP_LOGD(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
-    // vTaskDelay(pdMS_TO_TICKS(5000));
-    // lv_arc_set_value(uic_Arc1, 427);
-    // // lv_label_set_text(ui_Label1, "START");
-    // ESP_LOGD(TAG, "Called SquareLine LVGL UI objects once at init. Sleep 5 sec.");
-    // vTaskDelay(pdMS_TO_TICKS(5000));
 
     // Handle LVGL tasks
     while (1) {
@@ -348,10 +347,11 @@ static void lvgl_task(void *arg) {
             sprintf(textlabel, "This is counter: %u\n", counter);
             printf(textlabel);
             lv_label_set_text(label, textlabel);
+            lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
 
-            // ESP_LOGD(TAG, "Now calling SquareLine LVGL UI objects in loop.");
-            lv_arc_set_value(uic_Arc1, counter);
-            lv_label_set_text(ui_Label1, textlabel);
+            // ESP_LOGW(TAG, "Now calling SquareLine LVGL UI objects in loop.");
+            // lv_arc_set_value(ui_Arc1, 8888);
+            // lv_label_set_text(ui_Label1, "CO2 PPM");
 
             counter++;
         }
