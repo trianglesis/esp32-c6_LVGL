@@ -288,6 +288,38 @@ static esp_err_t lvgl_tick_init(void)
     return esp_timer_start_periodic(tick_timer, 2 * 1000); // 2 ms
 }
 
+/*
+ARC Of CO2
+*/
+static void value_changed_event_cb(lv_event_t * e);
+
+static void arc_co2(uint8_t co2_ppm) {
+    lv_obj_t * label = lv_label_create(lv_screen_active());
+
+    /*Create an Arc*/
+    lv_obj_t * arc = lv_arc_create(lv_screen_active());
+    lv_obj_set_size(arc, 150, 150);
+    lv_arc_set_rotation(arc, 135);
+    lv_arc_set_bg_angles(arc, 0, 270);
+    lv_arc_set_value(arc, co2_ppm);
+    lv_obj_center(arc);
+    lv_obj_add_event_cb(arc, value_changed_event_cb, LV_EVENT_VALUE_CHANGED, label);
+
+    /*Manually update the label for the first time*/
+    lv_obj_send_event(arc, LV_EVENT_VALUE_CHANGED, NULL);
+}
+
+static void value_changed_event_cb(lv_event_t * e)
+{
+    lv_obj_t * arc = lv_event_get_target_obj(e);
+    lv_obj_t * label = (lv_obj_t *)lv_event_get_user_data(e);
+
+    lv_label_set_text_fmt(label, "%" LV_PRId32 "%%", lv_arc_get_value(arc));
+
+    /*Rotate the label to the current position of the arc*/
+    lv_arc_rotate_obj_to_angle(arc, label, 25);
+}
+
 static void lvgl_task(void *arg) {
 
     vTaskDelay(pdMS_TO_TICKS(10));
@@ -315,12 +347,25 @@ static void lvgl_task(void *arg) {
         while (1);
     }
 
+    // Style for text
+    static lv_style_t style_txt_l;
+    lv_style_init(&style_txt_l);
+    lv_style_set_text_font(&style_txt_l, &lv_font_montserrat_18);  /* Set a larger font */
+
+    static lv_style_t style_txt_lg;
+    lv_style_init(&style_txt_lg);
+    lv_style_set_text_font(&style_txt_lg, &lv_font_montserrat_28);  /* Set a larger font */
+
+
     // Create a simple label
     lv_obj_t *label = lv_label_create(lv_scr_act());
-    lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
     lv_label_set_long_mode(label, LV_LABEL_LONG_WRAP);     /*Break the long lines*/
     lv_obj_set_width(label, DISP_VER_RES);  /*Set smaller width to make the lines wrap*/
+    lv_obj_add_style(label, &style_txt_l, LV_STATE_DEFAULT);
     lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+    lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
+    void lv_obj_delete(lv_obj_t * obj);
+    vTaskDelay(pdMS_TO_TICKS(2000));
 
     long curtime = esp_timer_get_time()/1000;
     int counter = 0;
@@ -333,12 +378,14 @@ static void lvgl_task(void *arg) {
         if (esp_timer_get_time()/1000 - curtime > 1000) {
             curtime = esp_timer_get_time()/1000;
 
-            char textlabel[20];
-            sprintf(textlabel, "This is counter: %u\n", counter);
-            printf(textlabel);
-            lv_label_set_text(label, textlabel);
-            lv_obj_set_width(label, DISP_VER_RES);  /*Set smaller width to make the lines wrap*/
-            lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+            // char textlabel[20];
+            // sprintf(textlabel, "This is counter: %u\n", counter);
+            // printf(textlabel);
+            // lv_obj_add_style(label, &style_txt_lg, LV_STATE_DEFAULT);
+            // lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+            // lv_label_set_text(label, textlabel);
+
+            arc_co2(counter);
 
             // ESP_LOGW(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
             // vTaskDelay(pdMS_TO_TICKS(15000));
