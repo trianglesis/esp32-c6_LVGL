@@ -69,7 +69,7 @@ static const char *TAG = "playground";
 #define LCD_PARAM_BITS         8
 
 // Rotate 90deg and compensate buffer change
-#define Offset_X 0 // 0 IF NOT ROTATED 270deg
+#define Offset_X 0   // 0 IF NOT ROTATED 270deg
 #define Offset_Y 34  // 34 IF ROTATED 270deg
 
 #define LEDC_HS_TIMER          LEDC_TIMER_0
@@ -80,7 +80,7 @@ static const char *TAG = "playground";
 #define LEDC_ResolutionRatio   LEDC_TIMER_13_BIT
 #define LEDC_MAX_Duty          ((1 << LEDC_ResolutionRatio) - 1)
 
-#define BUFFER_SIZE            (DISP_VER_RES * DISP_HOR_RES * 2)
+#define BUFFER_SIZE            (DISP_VER_RES * DISP_HOR_RES * 2 / 10)
 
 static esp_lcd_panel_handle_t panel_handle = NULL;
 static esp_lcd_panel_io_handle_t io_handle = NULL;
@@ -180,7 +180,7 @@ static esp_err_t lvgl_init(void)
     ESP_RETURN_ON_ERROR(esp_lcd_panel_io_register_event_callbacks(io_handle, &cbs, display), TAG, "esp_lcd_panel_io_register_event_callbacks error"); // I have tried to use 
     ESP_RETURN_ON_ERROR(esp_lcd_panel_init(panel_handle), TAG, "esp_lcd_panel_init error");
 
-    // lv_display_set_resolution(display, DISP_HOR_RES, DISP_VER_RES);
+    lv_display_set_resolution(display, DISP_HOR_RES, DISP_VER_RES);
     lv_display_set_physical_resolution(display, DISP_HOR_RES, DISP_VER_RES);
 
     /* Landscape orientation:
@@ -209,15 +209,26 @@ static esp_err_t lvgl_init(void)
     esp_lcd_panel_mirror(panel_handle, false, true);
     esp_lcd_panel_swap_xy(panel_handle, true);
 
+    // you may have to change it to false. it all depends if the driver has turned it on as a default.
+    // esp_lcd_panel_invert_color(panel_handle, true);
+
     // Set this display as defaulkt for UI use
     lv_display_set_default(display);
+
+    // Drop any theme if exist
+    bool is_def = lv_theme_default_is_inited();
+    if (is_def) {
+        // drop the default theme
+        ESP_LOGI(TAG, "Drop the default theme");
+        lv_theme_default_deinit();
+    }
 
     return ESP_OK;
 }
 
 static esp_err_t display_init(void) {
     // LCD initialization - enable from example
-    ESP_LOGD(TAG, "Initialize SPI bus");
+    ESP_LOGI(TAG, "Initialize SPI bus");
     spi_bus_config_t buscfg = { 
         .sclk_io_num = DISP_GPIO_SCLK,
         .mosi_io_num = DISP_GPIO_MOSI,
@@ -229,6 +240,7 @@ static esp_err_t display_init(void) {
     ESP_RETURN_ON_ERROR(spi_bus_initialize(SPI2_HOST, &buscfg, SPI_DMA_CH_AUTO), TAG, "SPI init failed");
 
     //  - repeat after example
+    // https://docs.espressif.com/projects/esp-iot-solution/en/latest/display/lcd/spi_lcd.html
     esp_lcd_panel_io_spi_config_t io_config = {
         .dc_gpio_num = DISP_GPIO_DC,
         .cs_gpio_num = DISP_GPIO_CS,
@@ -246,9 +258,10 @@ static esp_err_t display_init(void) {
 
     esp_lcd_panel_dev_config_t panel_config = {
         .reset_gpio_num = DISP_GPIO_RST,
-        .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_RGB,
+        .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_BGR,
         .bits_per_pixel = 16,
-        .flags = { .reset_active_high = 0 }  // Not in the example
+        .flags = { .reset_active_high = 0 },  // Not in the example
+        // .invert_color = 1,
     };
     
     ESP_LOGI(TAG, "Install ST7789T panel driver");
@@ -284,39 +297,6 @@ static esp_err_t lvgl_tick_init(void)
     };
     ESP_RETURN_ON_ERROR(esp_timer_create(&lvgl_tick_timer_args, &tick_timer), TAG, "Creating LVGL timer filed!");
     return esp_timer_start_periodic(tick_timer, 2 * 1000); // 2 ms
-}
-
-/*
-ARC Of CO2
-*/
-static void value_changed_event_cb(lv_event_t * e);
-
-static void arc_co2(lv_obj_t * drawing, uint8_t co2_ppm) {
-    lv_obj_clean(drawing);
-    lv_obj_t * label = lv_label_create(drawing);
-
-    /*Create an Arc*/
-    lv_obj_t * arc = lv_arc_create(drawing);
-    lv_obj_set_size(arc, 120, 120);
-    lv_arc_set_rotation(arc, 135);
-    lv_arc_set_bg_angles(arc, 0, 270);
-    lv_arc_set_value(arc, co2_ppm);
-    lv_obj_center(arc);
-    lv_obj_add_event_cb(arc, value_changed_event_cb, LV_EVENT_VALUE_CHANGED, label);
-
-    /*Manually update the label for the first time*/
-    lv_obj_send_event(arc, LV_EVENT_VALUE_CHANGED, NULL);
-}
-
-static void value_changed_event_cb(lv_event_t * e)
-{
-    lv_obj_t * arc = lv_event_get_target_obj(e);
-    lv_obj_t * label = (lv_obj_t *)lv_event_get_user_data(e);
-
-    lv_label_set_text_fmt(label, "%" LV_PRId32 "%%", lv_arc_get_value(arc));
-
-    /*Rotate the label to the current position of the arc*/
-    lv_arc_rotate_obj_to_angle(arc, label, 25);
 }
 
 static void lvgl_task(void *arg) {
@@ -368,7 +348,7 @@ static void lvgl_task(void *arg) {
     // lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
     // lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
     
-    // ESP_LOGW(TAG, "Deleting initial object lable");
+    // ESP_LOGI(TAG, "Deleting initial object lable");
     // vTaskDelay(pdMS_TO_TICKS(25000));
     // // void lv_obj_delete(lv_obj_t * start);
     // lv_obj_clean(start);
@@ -395,10 +375,10 @@ static void lvgl_task(void *arg) {
             // arc_co2(start, counter);
             lv_arc_set_value(ui_Arc1, counter);
 
-            // ESP_LOGW(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
+            // ESP_LOGI(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
             // vTaskDelay(pdMS_TO_TICKS(15000));
             // lv_label_set_text(ui_Label1, "START");
-            // ESP_LOGW(TAG, "Called SquareLine LVGL UI objects once at init. Sleep 5 sec.");
+            // ESP_LOGI(TAG, "Called SquareLine LVGL UI objects once at init. Sleep 5 sec.");
             // vTaskDelay(pdMS_TO_TICKS(25000));
 
             // Make up and down
