@@ -132,6 +132,7 @@ void BK_Light(uint8_t Light) {
     // 设置PWM占空比
     ledc_set_duty(ledc_channel.speed_mode, ledc_channel.channel, Duty);
     ledc_update_duty(ledc_channel.speed_mode, ledc_channel.channel);
+
 }
 
 // this gets called when the DMA transfer of the buffer data has completed
@@ -176,6 +177,8 @@ static esp_err_t lvgl_init(void)
      const esp_lcd_panel_io_callbacks_t cbs = {
         .on_color_trans_done = notify_flush_ready,
     };
+    // W (1442) lcd_panel.io.spi: Callback on_color_trans_done was already set and now it was overwritten!
+
     /* Register done callback */
     ESP_RETURN_ON_ERROR(esp_lcd_panel_io_register_event_callbacks(io_handle, &cbs, display), TAG, "esp_lcd_panel_io_register_event_callbacks error"); // I have tried to use 
     ESP_RETURN_ON_ERROR(esp_lcd_panel_init(panel_handle), TAG, "esp_lcd_panel_init error");
@@ -252,7 +255,7 @@ static esp_err_t display_init(void) {
         .on_color_trans_done = notify_flush_ready,
         .user_ctx = &display,
     };
-
+    
     // Attach the LCD to the SPI bus - repeat after example
     ESP_RETURN_ON_ERROR(esp_lcd_new_panel_io_spi(SPI2_HOST, &io_config, &io_handle), TAG, "SPI init failed");
 
@@ -261,7 +264,6 @@ static esp_err_t display_init(void) {
         .rgb_ele_order = LCD_RGB_ELEMENT_ORDER_BGR,
         .bits_per_pixel = 16,
         .flags = { .reset_active_high = 0 },  // Not in the example
-        // .invert_color = 1,
     };
     
     ESP_LOGI(TAG, "Install ST7789T panel driver");
@@ -326,35 +328,10 @@ static void lvgl_task(void *arg) {
         while (1);
     }
 
-    // // Style for text
-    // static lv_style_t style_txt_l;
-    // lv_style_init(&style_txt_l);
-    // lv_style_set_text_font(&style_txt_l, &lv_font_montserrat_18);  /* Set a larger font */
-
-    // static lv_style_t style_txt_lg;
-    // lv_style_init(&style_txt_lg);
-    // lv_style_set_text_font(&style_txt_lg, &lv_font_montserrat_28);  /* Set a larger font */
-
-    // // Create a simple label
-    // lv_obj_t * start = lv_obj_create(lv_screen_active());
-    // lv_obj_set_size(start, 320, 172);
-    // lv_obj_set_pos(start, 2, 2);
-    
-    // lv_obj_t *label = lv_label_create(start);
-
-    // lv_label_set_long_mode(label, LV_LABEL_LONG_WRAP);     /*Break the long lines*/
-    // lv_obj_set_width(label, DISP_VER_RES);  /*Set smaller width to make the lines wrap*/
-    // lv_obj_add_style(label, &style_txt_l, LV_STATE_DEFAULT);
-    // lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
-    // lv_label_set_text(label, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam euismod egestas augue at semper. Etiam ut erat vestibulum, volutpat lectus a, laoreet lorem.");
-    
-    // ESP_LOGI(TAG, "Deleting initial object lable");
-    // vTaskDelay(pdMS_TO_TICKS(25000));
-    // // void lv_obj_delete(lv_obj_t * start);
-    // lv_obj_clean(start);
-
     long curtime = esp_timer_get_time()/1000;
     int counter = 0;
+    
+    // NOTE: Always init UI from SquareLine Studio export!
     ui_init();
 
     // Handle LVGL tasks
@@ -365,24 +342,13 @@ static void lvgl_task(void *arg) {
         if (esp_timer_get_time()/1000 - curtime > 1000) {
             curtime = esp_timer_get_time()/1000;
 
-            // char textlabel[20];
-            // sprintf(textlabel, "This is counter: %u\n", counter);
-            // printf(textlabel);
-            // lv_obj_add_style(label, &style_txt_lg, LV_STATE_DEFAULT);
-            // lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
-            // lv_label_set_text(label, textlabel);
-            
-            // arc_co2(start, counter);
+            // Init SQ Line Studio elements
             lv_arc_set_value(ui_Arc1, counter);
-
-            // ESP_LOGI(TAG, "Calling SquareLine LVGL UI objects once at init. Sleep 5 sec.");
-            // vTaskDelay(pdMS_TO_TICKS(15000));
-            // lv_label_set_text(ui_Label1, "START");
-            // ESP_LOGI(TAG, "Called SquareLine LVGL UI objects once at init. Sleep 5 sec.");
-            // vTaskDelay(pdMS_TO_TICKS(25000));
+            lv_label_set_text_fmt(ui_Label1, "%d", counter);
+            lv_label_set_text(ui_Label2, "CO2 ppm");
 
             // Make up and down
-            if (counter == 100) {
+            if (counter == 2500) {
                 counter = 0;
             } else {
                 counter++;
